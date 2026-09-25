@@ -1,0 +1,23 @@
+/* Font now loaded via index.html <link> for better performance */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sora bg-warm-canvas text-ink antialiased selection:bg-thinkers-orange selection:text-white;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-glass-light backdrop-blur-xl border border-glass-border shadow-glass;
+  }
+  .safe-area-pb {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+}
