@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
-import { challenges } from '../data/mockChallenges';
+import { challenges, fillOpportunityTemplate } from '../data/mockChallenges';
 import BottomNav from '../components/BottomNav';
 
 const skillIcons = {
@@ -14,7 +14,7 @@ const skillIcons = {
 export default function Journey() {
   const navigate = useNavigate();
   const { journey, startChallenge } = useAppContext();
-  
+
   const completedItems = journey?.completed || [];
   const inProgressId = journey?.inProgress;
   const inProgressChallenge = inProgressId ? challenges.find(c => c.id === inProgressId) : null;
@@ -31,8 +31,6 @@ export default function Journey() {
       </header>
 
       <div className="max-w-md mx-auto p-6">
-
-        {/* Resumen */}
         <div className="flex gap-4 mb-8">
           <div className="flex-1 bg-white p-4 rounded-2xl border-2 border-ink/10 text-center shadow-sm">
             <span className="text-3xl font-bold text-thinkers-orange">{completedItems.length}</span>
@@ -47,7 +45,6 @@ export default function Journey() {
           </div>
         </div>
 
-        {/* En Curso */}
         {inProgressChallenge && (
           <div className="mb-8">
             <h2 className="text-lg font-bold text-ink mb-4">En curso</h2>
@@ -60,7 +57,7 @@ export default function Journey() {
                 </div>
               </div>
               <button
-                onClick={() => handleStart(inProgressChallenge.id)}
+                onClick={() => navigate(`/challenge/${inProgressChallenge.id}`)}
                 className="w-full bg-thinkers-orange text-white font-bold py-3 rounded-xl mt-4 shadow-[0_4px_0_#C52707] active:shadow-[0_0px_0_#C52707] active:translate-y-1 transition-all"
               >
                 Continuar
@@ -69,10 +66,9 @@ export default function Journey() {
           </div>
         )}
 
-        {/* Completados */}
         <div>
           <h2 className="text-lg font-bold text-ink mb-4">Lo que exploraste</h2>
-          
+
           {completedItems.length === 0 ? (
             <div className="text-center py-12 space-y-4">
               <span className="text-5xl" aria-hidden="true">🌱</span>
@@ -89,9 +85,10 @@ export default function Journey() {
               {completedItems.map((item, i) => {
                 const ch = challenges.find(c => c.id === item.challengeId);
                 if (!ch) return null;
-                
+
                 const date = new Date(item.completedAt);
                 const dateStr = date.toLocaleDateString('es-419', { day: 'numeric', month: 'short' });
+                const phrase = item.opportunityPhrase || fillOpportunityTemplate(ch.opportunity_template, item.opportunity || []);
 
                 return (
                   <motion.div
@@ -109,14 +106,14 @@ export default function Journey() {
                         <h3 className="text-lg font-bold text-ink">{ch.title}</h3>
                         <p className="text-sm font-bold text-ink-muted">{ch.skill} · {ch.difficulty}</p>
                         <p className="text-xs text-ink-muted mt-1">Completado el {dateStr}</p>
-                        
+
                         {item.observation && (
                           <div className="mt-3 bg-warm-canvas p-3 rounded-xl">
                             <p className="text-xs font-bold text-ink-muted uppercase mb-1">Tu respuesta</p>
                             <p className="text-sm font-medium text-ink">{item.observation}</p>
                           </div>
                         )}
-                        
+
                         {item.deepen && (
                           <div className="mt-2 bg-warm-canvas p-3 rounded-xl">
                             <p className="text-xs font-bold text-ink-muted uppercase mb-1">Tu idea</p>
@@ -124,10 +121,10 @@ export default function Journey() {
                           </div>
                         )}
 
-                        {item.opportunity && item.opportunity.some(b => b.trim()) && (
+                        {phrase && phrase.replace(/______/g, '').trim() && (
                           <div className="mt-2 bg-warm-canvas p-3 rounded-xl">
                             <p className="text-xs font-bold text-ink-muted uppercase mb-1">Tu oportunidad</p>
-                            <p className="text-sm font-medium text-ink">{item.opportunity.filter(b => b.trim()).join(' → ')}</p>
+                            <p className="text-sm font-medium text-ink">{phrase}</p>
                           </div>
                         )}
                       </div>

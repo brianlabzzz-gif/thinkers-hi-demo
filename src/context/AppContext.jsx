@@ -2,6 +2,17 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AppContext = createContext();
 
+const emptyJourney = {
+  inProgress: null,
+  inProgressStep: 1,
+  inProgressDraft: {
+    selectedOptionId: null,
+    deepenText: '',
+    oppBlanks: []
+  },
+  completed: []
+};
+
 const getSafe = (key, fallback) => {
   try {
     const item = localStorage.getItem(key);
@@ -11,6 +22,20 @@ const getSafe = (key, fallback) => {
   }
 };
 
+const normalizeJourney = (raw) => {
+  if (!raw || typeof raw !== 'object') return { ...emptyJourney };
+  return {
+    inProgress: raw.inProgress ?? null,
+    inProgressStep: raw.inProgressStep || 1,
+    inProgressDraft: {
+      selectedOptionId: raw.inProgressDraft?.selectedOptionId ?? null,
+      deepenText: raw.inProgressDraft?.deepenText ?? '',
+      oppBlanks: Array.isArray(raw.inProgressDraft?.oppBlanks) ? raw.inProgressDraft.oppBlanks : []
+    },
+    completed: Array.isArray(raw.completed) ? raw.completed : []
+  };
+};
+
 export const AppProvider = ({ children }) => {
   const [onboarded, setOnboarded] = useState(() => getSafe('thinkers_onboarded', false));
 
@@ -18,10 +43,7 @@ export const AppProvider = ({ children }) => {
     name: null, interest: null, context: null, help: null
   }));
 
-  const [journey, setJourney] = useState(() => getSafe('thinkers_journey', {
-    inProgress: null,
-    completed: []
-  }));
+  const [journey, setJourney] = useState(() => normalizeJourney(getSafe('thinkers_journey', emptyJourney)));
 
   useEffect(() => {
     localStorage.setItem('thinkers_onboarded', JSON.stringify(onboarded));
@@ -41,13 +63,43 @@ export const AppProvider = ({ children }) => {
   };
 
   const startChallenge = (id) => {
-    setJourney(prev => ({ ...prev, inProgress: id }));
+    setJourney(prev => {
+      if (prev.inProgress === id) return prev;
+      return {
+        ...prev,
+        inProgress: id,
+        inProgressStep: 1,
+        inProgressDraft: {
+          selectedOptionId: null,
+          deepenText: '',
+          oppBlanks: []
+        }
+      };
+    });
+  };
+
+  const saveChallengeProgress = (id, step, draft) => {
+    setJourney(prev => ({
+      ...prev,
+      inProgress: id,
+      inProgressStep: step,
+      inProgressDraft: {
+        selectedOptionId: draft?.selectedOptionId ?? prev.inProgressDraft?.selectedOptionId ?? null,
+        deepenText: draft?.deepenText ?? prev.inProgressDraft?.deepenText ?? '',
+        oppBlanks: draft?.oppBlanks ?? prev.inProgressDraft?.oppBlanks ?? []
+      }
+    }));
   };
 
   const finishChallenge = (result) => {
     setJourney(prev => ({
       inProgress: null,
-      // Deduplicate: replace previous completion of same challenge
+      inProgressStep: 1,
+      inProgressDraft: {
+        selectedOptionId: null,
+        deepenText: '',
+        oppBlanks: []
+      },
       completed: [result, ...prev.completed.filter(c => c.challengeId !== result.challengeId)]
     }));
   };
@@ -63,7 +115,7 @@ export const AppProvider = ({ children }) => {
     <AppContext.Provider value={{
       onboarded, completeOnboarding,
       preferences,
-      journey, startChallenge, finishChallenge,
+      journey, startChallenge, saveChallengeProgress, finishChallenge,
       resetAll
     }}>
       {children}
