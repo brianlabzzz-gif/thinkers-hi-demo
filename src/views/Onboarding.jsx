@@ -117,8 +117,7 @@ export default function Onboarding() {
           {step === 0 && (
             <motion.div key="name-step" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8">
               <div className="text-center space-y-4">
-                <span className="text-5xl" aria-hidden="true">👋</span>
-                <h1 className="text-2xl font-bold text-ink">Primero que todo, queremos conocerte.</h1>
+                <h1 className="text-2xl font-bold text-ink">Antes de empezar, queremos conocerte.</h1>
                 <p className="text-lg text-ink-muted">¿Cómo te llamas?</p>
               </div>
 
@@ -179,7 +178,11 @@ export default function Onboarding() {
 
           {step === 4 && (
             <motion.div key="recommend" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8 text-center">
-              <span className="text-5xl" aria-hidden="true">✨</span>
+              <p className="text-5xl font-semibold tracking-tight" aria-hidden="true">
+                <span className="text-thinkers-orange">H</span>
+                <span className="text-ink">I</span>
+                <span className="hi-dot text-ink">.</span>
+              </p>
               <h1 className="text-2xl font-bold text-ink">Listo, {userName}.</h1>
               <p className="text-lg font-bold text-ink-muted">
                 Vas a empezar por <span className="text-thinkers-orange">{recommendedSkill}</span>.

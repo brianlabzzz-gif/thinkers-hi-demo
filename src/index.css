@@ -20,4 +20,12 @@
   .safe-area-pb {
     padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
   }
+  .hi-dot {
+    animation: hi-dot 0.8s ease-in-out 3;
+  }
+}
+
+@keyframes hi-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }

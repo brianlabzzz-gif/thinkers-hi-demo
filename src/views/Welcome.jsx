@@ -1,51 +1,76 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const FULL = 'THINKERS HI.';
 
 export default function Welcome() {
   const navigate = useNavigate();
+  const [typed, setTyped] = useState('');
+  const [showRest, setShowRest] = useState(false);
+
+  const skipToEnd = () => {
+    setTyped(FULL);
+    setShowRest(true);
+  };
+
+  useEffect(() => {
+    if (typed === FULL) {
+      const t = setTimeout(() => setShowRest(true), 450);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => {
+      setTyped(FULL.slice(0, typed.length + 1));
+    }, typed.length === 0 ? 400 : 70);
+    return () => clearTimeout(t);
+  }, [typed]);
 
   return (
-    <div className="min-h-screen bg-thinkers-orange flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      {/* Fondo inmersivo */}
-      <motion.div 
-        animate={{ opacity: [0, 0.4, 0.4], scale: [0.9, 1, 1] }}
-        transition={{ duration: 4, ease: "easeOut" }}
-        className="absolute w-[600px] h-[600px] bg-white/10 rounded-full blur-3xl"
-      />
+    <div
+      className="min-h-screen bg-thinkers-orange flex flex-col items-center justify-between px-7 pt-20 pb-12"
+      onClick={skipToEnd}
+      role="presentation"
+    >
+      <div className="flex-1 flex flex-col items-center justify-center text-center w-full max-w-sm">
+        <h1 className="text-[36px] font-semibold text-white tracking-tight min-h-[48px]">
+          {typed}
+          {typed !== FULL && (
+            <span className="inline-block w-[10px] h-[10px] bg-white ml-1 align-middle mb-1" />
+          )}
+        </h1>
 
-      <div className="z-10 text-center text-white max-w-sm w-full space-y-12 flex flex-col items-center h-full justify-center">
-        
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-          className="space-y-6"
-        >
-          {/* Logo blanco sobre naranja */}
-          <img src="/logo-white.png" alt="Thinkers HI" className="w-48 mx-auto mb-8" />
-          
-          <h1 className="text-4xl font-bold tracking-tight leading-tight">
-            Hola, Bienvenido a Thinkers.
-          </h1>
-          <p className="text-xl font-medium text-white/90">
-            El espacio para la Innovación Humana.
-          </p>
-        </motion.div>
+        <AnimatePresence>
+          {showRest && (
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: 'easeInOut' }}
+              className="mt-4 text-lg font-normal text-white/90"
+            >
+              El espacio para la innovación humana.
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.6, type: 'spring', bounce: 0.5 }}
-          className="w-full pt-12"
-        >
-          <button 
-            onClick={() => navigate('/onboarding')}
-            className="w-full bg-white text-thinkers-orange text-xl font-bold py-5 rounded-2xl shadow-[0_8px_0_rgba(255,255,255,0.3)] active:shadow-[0_0px_0_rgba(255,255,255,0.3)] active:translate-y-2 transition-all"
-          >
-            Comenzar
-          </button>
-        </motion.div>
+      <div className="w-full max-w-sm">
+        <AnimatePresence>
+          {showRest && (
+            <motion.button
+              type="button"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.35, ease: 'easeOut' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate('/onboarding');
+              }}
+              className="w-full bg-white text-thinkers-orange text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5"
+            >
+              Comenzar
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
