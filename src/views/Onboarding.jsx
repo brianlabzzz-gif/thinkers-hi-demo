@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
@@ -11,6 +11,7 @@ export default function Onboarding() {
   const [step, setStep] = useState(0);
   const [userName, setUserName] = useState('');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [hiTyped, setHiTyped] = useState('');
   const [answers, setAnswers] = useState({
     interest: null,
     context: null,
@@ -18,6 +19,19 @@ export default function Onboarding() {
   });
 
   const totalSteps = 5;
+  const HI_FULL = 'HI.';
+
+  useEffect(() => {
+    if (step !== 4) {
+      setHiTyped('');
+      return;
+    }
+    if (hiTyped === HI_FULL) return;
+    const t = setTimeout(() => {
+      setHiTyped(HI_FULL.slice(0, hiTyped.length + 1));
+    }, hiTyped.length === 0 ? 280 : 160);
+    return () => clearTimeout(t);
+  }, [step, hiTyped]);
 
   const questions = [
     {
@@ -178,10 +192,15 @@ export default function Onboarding() {
 
           {step === 4 && (
             <motion.div key="recommend" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8 text-center">
-              <p className="text-5xl font-semibold tracking-tight" aria-hidden="true">
-                <span className="text-thinkers-orange">H</span>
-                <span className="text-ink">I</span>
-                <span className="hi-dot text-ink">.</span>
+              <p className="text-5xl font-semibold tracking-tight min-h-[60px]" aria-hidden="true">
+                {hiTyped.split('').map((ch, i) => (
+                  <span
+                    key={i}
+                    className={ch === 'H' ? 'text-thinkers-orange' : 'text-ink'}
+                  >
+                    {ch}
+                  </span>
+                ))}
               </p>
               <h1 className="text-2xl font-bold text-ink">Listo, {userName}.</h1>
               <p className="text-lg font-bold text-ink-muted">
