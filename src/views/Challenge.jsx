@@ -101,7 +101,13 @@ export default function Challenge() {
     }, 300);
   };
 
-  const feedbackData = challenge.feedback.correct;
+  const isCorrect =
+    selectedOption &&
+    challenge.correctOption &&
+    selectedOption.id === challenge.correctOption;
+  const feedbackData = isCorrect
+    ? challenge.feedback.correct
+    : challenge.feedback.incorrect;
   const phrase = fillOpportunityTemplate(challenge.opportunity_template, oppBlanks);
   const stuck = /no s[eé]|no tengo idea|ayud[ae]|help|\?{2,}|^\s*$/i.test(deepenText);
   const insertExample = () => {
@@ -169,7 +175,7 @@ export default function Challenge() {
               </div>
               <div className="space-y-3">
                 <h2 className="text-xl font-bold text-ink text-center">{challenge.question}</h2>
-                <p className="text-sm font-bold text-ink-muted text-center">¿Cuál te resuena más? No hay respuesta incorrecta.</p>
+                <p className="text-sm font-bold text-ink-muted text-center">Elige una. Después vemos qué se suele pasar por alto.</p>
                 {challenge.options.map((opt) => (
                   <button
                     key={opt.id}
