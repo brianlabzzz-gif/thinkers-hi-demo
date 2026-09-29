@@ -1,207 +1,207 @@
 export const challenges = [
   {
     id: 'OBS-01',
-    title: 'El secreto del café',
+    title: 'El vaso de café',
     skill: 'Observación',
     difficulty: 'Fácil',
     template: 'A',
-    scenario: 'Piensa en un vaso de café para llevar. Casi siempre le ponen una funda extra de cartón alrededor.',
-    question: 'Si miras con atención, ¿qué problema crees que están resolviendo con esa funda?',
+    scenario: 'En muchos lugares, el café para llevar viene en un vaso delgado y le ponen un cartón alrededor.',
+    question: '¿Para qué crees que le ponen ese cartón?',
     correctOption: null,
     options: [
-      { id: 'opt1', text: 'Que el vaso queme las manos.' },
-      { id: 'opt2', text: 'Que fabricar un vaso grueso para todo el mundo saldría más caro.' },
-      { id: 'opt3', text: 'Que necesitan un lugar extra para el logo o el mensaje.' }
+      { id: 'opt1', text: 'Para que el vaso no queme las manos.' },
+      { id: 'opt2', text: 'Para no tener que hacer todos los vasos más gruesos.' },
+      { id: 'opt3', text: 'Para poner el logo o un mensaje.' }
     ],
     feedback: {
       correct: {
         title: 'Buena mirada.',
-        text: 'En la práctica, la funda existe sobre todo por costo: un vaso delgado estándar + cartón solo cuando la bebida va caliente. Observar bien es notar qué se agregó después, no solo lo que se ve primero.'
+        text: 'Las tres pueden ser ciertas. Alguien vio un problema en algo tan simple como un vaso y le puso una pieza de más. Observar es notar esos extras que casi nadie se pregunta.'
       },
       incorrect: {
         title: 'Buena mirada.',
-        text: 'En la práctica, la funda existe sobre todo por costo: un vaso delgado estándar + cartón solo cuando la bebida va caliente. Observar bien es notar qué se agregó después, no solo lo que se ve primero.'
+        text: 'Las tres pueden ser ciertas. Alguien vio un problema en algo tan simple como un vaso y le puso una pieza de más. Observar es notar esos extras que casi nadie se pregunta.'
       }
     },
-    deepen_prompt: 'En tu casa, trabajo o camino de todos los días, ¿qué cosa usa un “parche extra” en vez de estar bien diseñada desde el inicio?',
-    opportunity_blanks: ['el producto o proceso', 'lo que sobra o estorba', 'el resultado ideal'],
-    opportunity_template: 'Podríamos mejorar ______ eliminando ______ y haciendo que ______.',
+    deepen_prompt: 'Mira a tu alrededor. ¿Qué cosa de tu día tiene un extra que no venía así de origen? Escríbelo en una frase.',
+    opportunity_blanks: ['el objeto', 'el extra que le ponen'],
+    opportunity_template: 'En ______ le ponen ______ porque así, de origen, no alcanza.',
     help_examples: [
-      'El cargador del celular con un adaptador extra porque el enchufe no calza.',
-      'La contraseña escrita en un papel pegado al monitor.',
-      'La tapa que no cierra y le ponen cinta.'
+      'En el enchufe le ponen un adaptador porque no entra.',
+      'En la tapa le ponen cinta porque no cierra.',
+      'En la silla le ponen un cojín porque lastima.'
     ],
-    close_feedback: 'Observaste un parche. El siguiente paso es preguntarte si se puede diseñar sin ese extra.'
+    close_feedback: 'Ya viste un extra. Ahora pregúntate si se puede hacer bien desde el inicio.'
   },
   {
     id: 'OBS-02',
-    title: 'Lo que nadie ve en el elevador',
+    title: 'El espejo del elevador',
     skill: 'Observación',
-    difficulty: 'Medio',
+    difficulty: 'Fácil',
     template: 'A',
-    scenario: 'En muchos edificios hay un espejo grande dentro del elevador. La gente se mira, se arregla el pelo, revisa la ropa.',
-    question: 'Más allá de verse, ¿qué otra cosa podría estar pasando mientras la gente espera?',
+    scenario: 'En muchos edificios hay un espejo grande dentro del elevador. La gente se mira mientras sube.',
+    question: 'Además de verse, ¿qué otra cosa puede estar pasando?',
     correctOption: null,
     options: [
-      { id: 'opt1', text: 'La gente se distrae y la espera se siente más corta.' },
-      { id: 'opt2', text: 'El espacio se siente más grande.' },
+      { id: 'opt1', text: 'La espera se siente más corta.' },
+      { id: 'opt2', text: 'El elevador se siente más grande.' },
       { id: 'opt3', text: 'La gente llega más arreglada a su piso.' }
     ],
     feedback: {
       correct: {
-        title: 'Eso es observar el problema emocional.',
-        text: 'Una historia clásica: las quejas por elevadores lentos bajaron cuando pusieron espejos. No hicieron el elevador más rápido. Cambiaron lo que la gente hace mientras espera. A veces el problema real no es la velocidad: es cómo se siente el tiempo.'
+        title: 'Eso también es observar.',
+        text: 'En varios edificios pusieron espejos y bajaron las quejas de que el elevador estaba lento. No lo hicieron más rápido. Cambiaron lo que haces mientras esperas.'
       },
       incorrect: {
-        title: 'Eso es observar el problema emocional.',
-        text: 'Una historia clásica: las quejas por elevadores lentos bajaron cuando pusieron espejos. No hicieron el elevador más rápido. Cambiaron lo que la gente hace mientras espera. A veces el problema real no es la velocidad: es cómo se siente el tiempo.'
+        title: 'Eso también es observar.',
+        text: 'En varios edificios pusieron espejos y bajaron las quejas de que el elevador estaba lento. No lo hicieron más rápido. Cambiaron lo que haces mientras esperas.'
       }
     },
-    deepen_prompt: '¿Dónde en tu día la espera se siente eterna? ¿Qué “espejo” le pondrías para cambiar esa experiencia sin hacer el proceso más rápido?',
-    opportunity_blanks: ['lo que quieres mejorar', 'cómo quieres que se sienta la espera', 'qué podrías agregar'],
-    opportunity_template: 'En lugar de hacer ______ más rápido, podríamos hacer que la espera se sienta ______ al agregar ______.',
+    deepen_prompt: '¿Dónde te toca esperar mucho en la semana (fila, bus, consulta, comida)? Escríbelo y di qué pondrías para que la espera se sienta distinta.',
+    opportunity_blanks: ['dónde esperas', 'qué agregarías'],
+    opportunity_template: 'En ______ la espera se sentiría mejor si hubiera ______.',
     help_examples: [
-      'La fila del banco: un pantallazo que explique en qué van, no solo un número.',
-      'Esperar el bus: un mapa en vivo de cuántos minutos faltan.',
-      'La sala de espera del doctor: una tarea corta en vez de solo sillas.'
+      'En la fila del banco, un letrero que diga cuántos faltan.',
+      'En la parada del bus, cuántos minutos faltan.',
+      'En la sala de espera, algo corto para leer o hacer.'
     ],
-    close_feedback: 'Cambiaste el problema: no era solo velocidad, era cómo se siente el tiempo.'
+    close_feedback: 'Viste que a veces el problema no es la velocidad: es cómo se siente el tiempo.'
   },
   {
     id: 'CUE-01',
-    title: 'La regla invisible',
+    title: 'La regla que nadie pregunta',
     skill: 'Cuestionamiento',
     difficulty: 'Fácil',
     template: 'B',
-    scenario: 'En muchos trabajos el horario es fijo (por ejemplo, 9 a 5), aunque hayas terminado tus tareas a las 3.',
-    question: 'Si cuestionas esa regla, ¿qué estamos asumiendo de verdad?',
+    scenario: 'Hay reglas que todos siguen aunque ya no tengan sentido. Ejemplo: quedarse hasta cierta hora aunque el trabajo ya esté listo.',
+    question: 'Si cuestionas esa regla, ¿qué estamos dando por hecho?',
     correctOption: null,
     options: [
-      { id: 'opt1', text: 'Que más horas sentado = más trabajo hecho.' },
-      { id: 'opt2', text: 'Que todas las personas rinden a la misma hora.' },
-      { id: 'opt3', text: 'Que el trabajo se mide por tiempo, no por resultado.' }
+      { id: 'opt1', text: 'Que estar más tiempo es trabajar más.' },
+      { id: 'opt2', text: 'Que todos rinden a la misma hora.' },
+      { id: 'opt3', text: 'Que lo que cuenta es el reloj, no el resultado.' }
     ],
     feedback: {
       correct: {
-        title: 'Ahí hay una regla invisible.',
-        text: 'Las tres apuntan a lo mismo: medimos presencia, no valor. Cuestionar no es quejarse. Es nombrar la suposición que nadie discute y preguntar qué pasaría si no fuera cierta.'
+        title: 'Ahí hay una regla escondida.',
+        text: 'Cuestionar no es pelear. Es decir en voz alta lo que todos dan por hecho y preguntar: ¿y si no fuera cierto?'
       },
       incorrect: {
-        title: 'Ahí hay una regla invisible.',
-        text: 'Las tres apuntan a lo mismo: medimos presencia, no valor. Cuestionar no es quejarse. Es nombrar la suposición que nadie discute y preguntar qué pasaría si no fuera cierta.'
+        title: 'Ahí hay una regla escondida.',
+        text: 'Cuestionar no es pelear. Es decir en voz alta lo que todos dan por hecho y preguntar: ¿y si no fuera cierto?'
       }
     },
-    deepen_prompt: 'En tu trabajo, estudio o casa, ¿cuál es una regla que todos siguen y nadie cuestiona? Escríbela en una frase.',
-    opportunity_blanks: ['lo que dejarías de medir', 'lo que empezarías a medir'],
-    opportunity_template: '¿Qué pasaría si dejamos de medir ______ y empezamos a medir ______?',
+    deepen_prompt: 'En tu casa, estudio o trabajo, ¿qué regla se sigue “porque siempre se ha hecho así”? Escríbela en una frase.',
+    opportunity_blanks: ['la regla', 'lo que medirías en su lugar'],
+    opportunity_template: '¿Qué pasaría si dejamos la regla de ______ y en su lugar medimos ______?',
     help_examples: [
-      'Hay que quedarse hasta las 5 aunque el trabajo ya esté listo.',
-      'Hay que entregar el informe en PDF aunque nadie lo lea.',
-      'Hay que pedir permiso para una idea antes de probarla.'
+      'Hay que quedarse hasta las 5 aunque ya terminaste.',
+      'Hay que entregar el informe en un formato que nadie lee.',
+      'Hay que pedir permiso para probar una idea pequeña.'
     ],
-    close_feedback: 'Nombraste una regla invisible. Eso ya es cuestionar: ahora se puede medir otra cosa.'
+    close_feedback: 'Nombraste una regla que nadie discute. Eso ya es cuestionar.'
   },
   {
     id: 'CUE-02',
-    title: 'La bata blanca',
+    title: 'Por qué se ve serio',
     skill: 'Cuestionamiento',
-    difficulty: 'Medio',
+    difficulty: 'Fácil',
     template: 'B',
-    scenario: 'Vas al doctor y casi siempre lleva bata blanca. En muchas consultas no hace ningún procedimiento: habla, revisa y receta.',
-    question: 'Si la bata no es necesaria para hablar contigo, ¿para qué sigue ahí?',
+    scenario: 'El doctor casi siempre usa bata blanca. En muchas consultas solo habla, revisa y escribe la receta. No opera.',
+    question: 'Si no la necesita para hablarte, ¿para qué sigue usándola?',
     correctOption: null,
     options: [
-      { id: 'opt1', text: 'Por costumbre del hospital.' },
-      { id: 'opt2', text: 'Porque se ve “como doctor” y eso genera confianza.' },
+      { id: 'opt1', text: 'Por costumbre del lugar.' },
+      { id: 'opt2', text: 'Para que se note que es el doctor y genere confianza.' },
       { id: 'opt3', text: 'Por higiene, aunque en esa consulta no se use.' }
     ],
     feedback: {
       correct: {
-        title: 'Cuestionaste la forma, no solo la función.',
-        text: 'La bata también es una señal: “esto es un profesional”. En innovación importa tanto lo que algo hace como lo que algo comunica. Si quitas la señal, a veces el valor percibido se cae aunque el servicio sea el mismo.'
+        title: 'Buena pregunta.',
+        text: 'A veces la ropa, el logo o el título no hacen el trabajo: hacen que la gente confíe. Cuestionar es separar lo que sirve de lo que solo se ve bien.'
       },
       incorrect: {
-        title: 'Cuestionaste la forma, no solo la función.',
-        text: 'La bata también es una señal: “esto es un profesional”. En innovación importa tanto lo que algo hace como lo que algo comunica. Si quitas la señal, a veces el valor percibido se cae aunque el servicio sea el mismo.'
+        title: 'Buena pregunta.',
+        text: 'A veces la ropa, el logo o el título no hacen el trabajo: hacen que la gente confíe. Cuestionar es separar lo que sirve de lo que solo se ve bien.'
       }
     },
-    deepen_prompt: '¿Qué “bata blanca” usas tú, tu producto o tu trabajo para que la gente confíe? ¿Qué pasaría si no la tuvieras?',
-    opportunity_blanks: ['dónde quieres generar más confianza', 'qué cambiarías en cómo se presenta'],
-    opportunity_template: 'Podríamos generar más confianza en ______ si cambiamos la forma en que ______.',
+    deepen_prompt: '¿Qué usas tú o tu trabajo para que la gente confíe? Un título, un uniforme, un logo, una forma de hablar. ¿Qué pasaría si no lo tuvieras?',
+    opportunity_blanks: ['con quién quieres más confianza', 'qué cambiarías'],
+    opportunity_template: 'Podríamos generar más confianza con ______ si cambiamos ______.',
     help_examples: [
-      'El título en la firma del correo.',
-      'El logo o el uniforme que “se ve profesional”.',
-      'Hablar con palabras difíciles para parecer experto.'
+      'El título largo en la firma del correo.',
+      'El uniforme o el logo que se ve profesional.',
+      'Hablar difícil para parecer experto.'
     ],
-    close_feedback: 'Viste que la forma también vende confianza. Cuidado: si quitas la señal, el valor tiene que sostenerse solo.'
+    close_feedback: 'Separaste lo que sirve de lo que solo se ve. Si quitas esa apariencia, el trabajo tiene que valer solo.'
   },
   {
     id: 'ASO-01',
-    title: 'Robar como un artista',
+    title: 'Pedir prestado',
     skill: 'Asociación',
     difficulty: 'Fácil',
     template: 'C',
-    scenario: 'Tienes que aprender algo aburrido y sientes que nada se te queda.',
-    question: 'Si quisieras hacerlo más adictivo, ¿a qué mundo le “robarías” una idea?',
+    scenario: 'Tienes que aprender o hacer algo que se te hace pesado. Casi no avanzas.',
+    question: 'Si quisieras que se sienta más fácil, ¿de dónde tomarías una idea?',
     correctOption: null,
     options: [
-      { id: 'opt1', text: 'A los videojuegos: niveles, recompensas, vidas.' },
-      { id: 'opt2', text: 'A las series: dejar la intriga al final de cada bloque.' },
-      { id: 'opt3', text: 'A los videos cortos: poco texto, mucho ritmo.' }
+      { id: 'opt1', text: 'De un juego: niveles, puntos, no romper la racha.' },
+      { id: 'opt2', text: 'De una serie: terminar cada bloque con ganas de seguir.' },
+      { id: 'opt3', text: 'De un video corto: poco texto, ritmo rápido.' }
     ],
     feedback: {
       correct: {
-        title: 'Esa es una asociación.',
-        text: 'Innovar casi nunca es inventar desde cero. Es tomar algo que ya funciona en un mundo y moverlo a otro. Duolingo hizo eso con mecánicas de juego para enseñar idiomas. Tu trabajo ahora es elegir un préstamo y aterrizarlo.'
+        title: 'Eso es asociar.',
+        text: 'Casi nadie inventa desde cero. Toma algo que ya funciona en un lado y lo pasa al otro. Duolingo tomó ideas de los juegos para enseñar idiomas.'
       },
       incorrect: {
-        title: 'Esa es una asociación.',
-        text: 'Innovar casi nunca es inventar desde cero. Es tomar algo que ya funciona en un mundo y moverlo a otro. Duolingo hizo eso con mecánicas de juego para enseñar idiomas. Tu trabajo ahora es elegir un préstamo y aterrizarlo.'
+        title: 'Eso es asociar.',
+        text: 'Casi nadie inventa desde cero. Toma algo que ya funciona en un lado y lo pasa al otro. Duolingo tomó ideas de los juegos para enseñar idiomas.'
       }
     },
-    deepen_prompt: 'Piensa en tu app, juego o lugar favorito. ¿Qué detalle pequeño de ahí podrías aplicar a una tarea tuya de esta semana?',
-    opportunity_blanks: ['la idea que tomarías prestada', 'dónde la aplicarías'],
+    deepen_prompt: 'Piensa en tu app, juego, tienda o lugar favorito. ¿Qué detalle pequeño de ahí usarías esta semana en una tarea tuya?',
+    opportunity_blanks: ['la idea prestada', 'dónde la usarías'],
     opportunity_template: 'Podríamos usar la idea de ______ para mejorar cómo ______.',
     help_examples: [
-      'La racha de Duolingo para no saltarme una hora de estudio.',
-      'El “continuar viendo” de Netflix para retomar una tarea a medias.',
-      'Los niveles de un juego para partir un proyecto grande.'
+      'La racha de una app para no saltarme el estudio.',
+      'El “seguir viendo” para retomar una tarea a medias.',
+      'Los niveles de un juego para partir un trabajo grande.'
     ],
-    close_feedback: 'Pediste prestada una idea de otro mundo. Eso es asociación: no inventaste desde cero.'
+    close_feedback: 'Pediste prestada una idea de otro mundo. No tuviste que inventar desde cero.'
   },
   {
     id: 'ASO-02',
-    title: 'El hospital y la F1',
+    title: 'Dos mundos, un truco',
     skill: 'Asociación',
-    difficulty: 'Medio',
+    difficulty: 'Fácil',
     template: 'C',
-    scenario: 'En un hospital, al pasar un paciente de cirugía a cuidados intensivos había caos: cables, aparatos, poco tiempo, varios errores.',
-    question: 'Si no miras otros hospitales, ¿a qué otro mundo se parece ese momento?',
+    scenario: 'Cuando un paciente sale de cirugía, hay que pasarlo rápido a otra cama: cables, aparatos, varias personas, poco tiempo. Fácil equivocarse.',
+    question: 'Ese momento se parece más a:',
     correctOption: null,
     options: [
-      { id: 'opt1', text: 'A un pit stop: un equipo, muchas manos, segundos, cero margen.' },
-      { id: 'opt2', text: 'A una cocina en hora pico.' },
-      { id: 'opt3', text: 'A una mudanza expres: sacar, mover, reconectar.' }
+      { id: 'opt1', text: 'Cambiar las llantas de un carro en segundos, en equipo.' },
+      { id: 'opt2', text: 'Una cocina llena en la hora de almuerzo.' },
+      { id: 'opt3', text: 'Una mudanza rápida: sacar, mover y volver a conectar.' }
     ],
     feedback: {
       correct: {
-        title: 'La conexión buena casi nunca está “adentro”.',
-        text: 'El caso real fue con un equipo de Fórmula 1: vieron el pit stop y rediseñaron la transferencia. Los errores bajaron. Asociación es forzar un parecido con un mundo que no es el tuyo y robar el método, no la estética.'
+        title: 'Buena conexión.',
+        text: 'Un hospital real miró cómo un equipo de carreras cambia las llantas en segundos y copió la forma de trabajar: cada quien sabe qué tocar. Bajaron los errores. Asociar es copiar cómo lo hacen, no cómo se ve.'
       },
       incorrect: {
-        title: 'La conexión buena casi nunca está “adentro”.',
-        text: 'El caso real fue con un equipo de Fórmula 1: vieron el pit stop y rediseñaron la transferencia. Los errores bajaron. Asociación es forzar un parecido con un mundo que no es el tuyo y robar el método, no la estética.'
+        title: 'Buena conexión.',
+        text: 'Un hospital real miró cómo un equipo de carreras cambia las llantas en segundos y copió la forma de trabajar: cada quien sabe qué tocar. Bajaron los errores. Asociar es copiar cómo lo hacen, no cómo se ve.'
       }
     },
-    deepen_prompt: 'Elige un problema tuyo de esta semana. ¿A qué oficio o industria que no es la tuya se parece? Nombra el parecido en una frase.',
-    opportunity_blanks: ['tu problema', 'el mundo distinto que lo resuelve bien', 'cómo lo resuelven'],
+    deepen_prompt: 'Elige un problema de tu semana. ¿A qué otro oficio se parece? Escríbelo en una frase.',
+    opportunity_blanks: ['tu problema', 'el otro oficio', 'cómo lo resuelven'],
     opportunity_template: 'El problema de ______ se parece a cómo ______ resuelve ______.',
     help_examples: [
-      'Las reuniones eternas se parecen a un restaurante sin comandas: nadie sabe el orden.',
-      'Entregar un trabajo a última hora se parece a una cocina en hora pico.',
-      'Pasar un proyecto de una persona a otra se parece a un relevo en atletismo.'
+      'Las reuniones largas se parecen a un restaurante donde nadie anota el pedido.',
+      'Entregar a última hora se parece a una cocina en hora pico.',
+      'Pasar un trabajo de una persona a otra se parece a un relevo.'
     ],
-    close_feedback: 'Conectaste tu problema con otro oficio. El valor está en robar el método, no la estética.'
+    close_feedback: 'Conectaste tu problema con otro oficio. Lo útil es copiar cómo lo hacen, no cómo se ve.'
   }
 ];
 
