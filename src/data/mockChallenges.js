@@ -35,8 +35,9 @@ export const challenges = [
       }
     ],
     deepen_prompt: 'Ahora aplícalo a tu día. ¿Qué cosa ves que le pusieron un extra porque de origen no alcanza? Escríbelo en una frase completa: qué es y qué le agregaron.',
-    opportunity_blanks: ['el objeto', 'el extra que le ponen'],
-    opportunity_template: 'En ______ le ponen ______ porque así, de origen, no alcanza.',
+    opportunity_blanks: ['qué cosa', 'qué le agregan'],
+    opportunity_hints: ['el enchufe del celular', 'un adaptador'],
+    opportunity_template: 'En mi día, a ______ le ponen ______ porque solo no funciona bien.',
     help_examples: [
       'En el enchufe del celular le ponen un adaptador porque el cargador no entra en el tomacorriente.',
       'En la tapa del envase le ponen cinta porque no cierra y se sale el líquido.',
@@ -81,7 +82,8 @@ export const challenges = [
     ],
     deepen_prompt: '¿Dónde te toca esperar mucho en la semana (fila, bus, consulta, comida)? Escríbelo y di qué pondrías para que la espera se sienta distinta, sin hacer el proceso más rápido.',
     opportunity_blanks: ['dónde esperas', 'qué pondrías'],
-    opportunity_template: 'En ______ la espera se sentiría mejor si hubiera ______.',
+    opportunity_hints: ['la fila del banco', 'un letrero con los minutos que faltan'],
+    opportunity_template: 'Cuando espero en ______, se sentiría mejor si hubiera ______.',
     help_examples: [
       'En la fila del banco pondría un letrero que diga cuántas personas faltan y cuántos minutos son.',
       'En la parada del bus pondría el minuto real de llegada, no solo la ruta.',
@@ -125,8 +127,9 @@ export const challenges = [
       }
     ],
     deepen_prompt: 'En tu casa, estudio o trabajo, ¿qué regla se sigue “porque siempre se ha hecho así”? Escríbela en una frase y di qué medirías en su lugar.',
-    opportunity_blanks: ['la regla', 'lo que medirías en su lugar'],
-    opportunity_template: '¿Qué pasaría si dejamos la regla de ______ y en su lugar medimos ______?',
+    opportunity_blanks: ['la regla de hoy', 'lo que medirías en su lugar'],
+    opportunity_hints: ['quedarse hasta las 5 aunque ya terminaste', 'si el trabajo quedó bien hecho'],
+    opportunity_template: 'Si dejamos la regla de ______, en su lugar podríamos medir ______.',
     help_examples: [
       'La regla es quedarse hasta las 5 aunque ya terminaste. En su lugar mediría si el trabajo quedó bien hecho.',
       'La regla es entregar el informe en un formato que nadie lee. En su lugar mediría si la gente usó la información.',
@@ -170,8 +173,9 @@ export const challenges = [
       }
     ],
     deepen_prompt: '¿Qué usas tú o tu trabajo para que la gente confíe? Un título, un uniforme, un logo, una forma de hablar. Escríbelo y di qué pasaría si no lo tuvieras.',
-    opportunity_blanks: ['con quién quieres más confianza', 'qué cambiarías'],
-    opportunity_template: 'Podríamos generar más confianza con ______ si cambiamos ______.',
+    opportunity_blanks: ['con quién', 'qué cambiarías'],
+    opportunity_hints: ['mis clientes', 'el título largo del correo'],
+    opportunity_template: 'La gente confiaría más en ______ si cambiáramos ______.',
     help_examples: [
       'Uso un título largo en la firma del correo. Si lo quito, a lo mejor dejan de abrirlo.',
       'Uso un uniforme o un logo que se ve profesional. Si no está, la gente duda aunque el servicio sea igual.',
@@ -215,8 +219,9 @@ export const challenges = [
       }
     ],
     deepen_prompt: 'Piensa en tu app, juego, tienda o lugar favorito. ¿Qué detalle pequeño de ahí usarías esta semana en una tarea tuya? Escríbelo así: de dónde lo sacas y en qué lo vas a usar.',
-    opportunity_blanks: ['la idea prestada', 'dónde la usarías'],
-    opportunity_template: 'Podríamos usar la idea de ______ para mejorar cómo ______.',
+    opportunity_blanks: ['de dónde la sacas', 'en qué la usarías'],
+    opportunity_hints: ['la racha de una app', 'no saltarme el estudio'],
+    opportunity_template: 'Podría tomar la idea de ______ y usarla para ______.',
     help_examples: [
       'De una app de idiomas tomo la racha de días seguidos para no saltarme el estudio.',
       'De una plataforma de series tomo el “seguir viendo” para retomar una tarea que dejé a medias.',
@@ -261,7 +266,8 @@ export const challenges = [
     ],
     deepen_prompt: 'Elige un problema de tu semana. ¿A qué otro oficio se parece, y cómo lo resuelven ellos? Escríbelo en una frase completa.',
     opportunity_blanks: ['tu problema', 'el otro oficio', 'cómo lo resuelven'],
-    opportunity_template: 'El problema de ______ se parece a cómo ______ resuelve ______.',
+    opportunity_hints: ['las reuniones largas', 'un restaurante', 'anotar cada pedido'],
+    opportunity_template: 'Mi problema de ______ se parece a cómo ______ resuelve ______.',
     help_examples: [
       'Las reuniones largas se parecen a un restaurante donde nadie anota el pedido: por eso se pierde el orden.',
       'Entregar todo a última hora se parece a una cocina en hora pico: todos gritan y se quema algo.',

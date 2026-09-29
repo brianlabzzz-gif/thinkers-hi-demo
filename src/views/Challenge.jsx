@@ -244,21 +244,25 @@ export default function Challenge() {
           {step === 4 && (
             <motion.div key="step4" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
               <div className="text-center space-y-2">
-                <h1 className="text-2xl font-bold text-ink">Arma tu oportunidad</h1>
-                <p className="text-base text-ink-muted">Completa la frase.</p>
+                <h1 className="text-2xl font-bold text-ink">Ahora en tu día</h1>
+                <p className="text-base text-ink-muted">Completa cada espacio. La frase se arma sola.</p>
               </div>
-              <div className="bg-white p-6 rounded-3xl border-2 border-ink/10 shadow-sm space-y-4">
-                <p className="font-bold text-ink text-lg">{challenge.opportunity_template}</p>
-                {challenge.opportunity_blanks.map((placeholder, i) => (
-                  <input
-                    key={i}
-                    type="text"
-                    placeholder={placeholder}
-                    aria-label={placeholder}
-                    className="w-full text-lg font-medium bg-warm-canvas border-2 border-ink/10 rounded-xl p-4 focus:border-thinkers-orange outline-none focus:ring-4 focus:ring-thinkers-orange/20 transition-all"
-                    value={oppBlanks[i] || ''}
-                    onChange={e => updateBlank(i, e.target.value)}
-                  />
+              <div className="bg-white p-6 rounded-3xl border-2 border-ink/10 shadow-sm space-y-5">
+                <p className="font-semibold text-ink text-lg leading-relaxed">
+                  {phrase}
+                </p>
+                {challenge.opportunity_blanks.map((label, i) => (
+                  <label key={i} className="block space-y-1.5 text-left">
+                    <span className="text-xs font-bold uppercase tracking-wide text-ink-muted">{label}</span>
+                    <input
+                      type="text"
+                      placeholder={challenge.opportunity_hints?.[i] || label}
+                      aria-label={label}
+                      className="w-full text-lg font-medium bg-warm-canvas border-2 border-ink/10 rounded-xl p-4 focus:border-thinkers-orange outline-none focus:ring-4 focus:ring-thinkers-orange/20 transition-all"
+                      value={oppBlanks[i] || ''}
+                      onChange={e => updateBlank(i, e.target.value)}
+                    />
+                  </label>
                 ))}
               </div>
             </motion.div>
