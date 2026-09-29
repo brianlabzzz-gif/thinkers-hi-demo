@@ -127,44 +127,33 @@ export default function Onboarding() {
         </div>
       </div>
 
-      <div className="w-full max-w-md z-10 flex-1 flex flex-col justify-start pt-10">
+      <div className="w-full max-w-md z-10 flex-1 flex flex-col pt-16">
         <AnimatePresence mode="wait">
           {step === 0 && (
             <motion.div key="name-step" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8">
-              <div className="text-center space-y-4">
+              <div className="text-center space-y-3">
                 <h1 className="text-2xl font-bold text-ink">Antes de empezar, queremos conocerte.</h1>
                 <p className="text-lg text-ink-muted">¿Cómo te llamas?</p>
               </div>
-
-              <div className="pt-4 space-y-6">
-                <input
-                  type="text"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                  placeholder="Escribe tu nombre..."
-                  aria-label="Tu nombre"
-                  className="w-full text-2xl font-bold text-center bg-white border-2 border-ink/10 rounded-2xl p-6 focus:outline-none focus:border-thinkers-orange focus:ring-4 focus:ring-thinkers-orange/20 shadow-sm transition-all"
-                  autoFocus
-                  onKeyDown={(e) => e.key === 'Enter' && handleNext()}
-                />
-                <button
-                  onClick={handleNext}
-                  disabled={!userName.trim()}
-                  className="w-full bg-thinkers-orange text-white text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5 transition-all disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-ink"
-                >
-                  Continuar
-                </button>
-              </div>
+              <input
+                type="text"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                placeholder="Escribe tu nombre..."
+                aria-label="Tu nombre"
+                className="w-full text-2xl font-bold text-center bg-white border-2 border-ink/10 rounded-2xl p-6 focus:outline-none focus:border-thinkers-orange focus:ring-4 focus:ring-thinkers-orange/20 shadow-sm transition-all"
+                autoFocus
+                onKeyDown={(e) => e.key === 'Enter' && handleNext()}
+              />
             </motion.div>
           )}
 
           {step > 0 && step < 4 && (
-            <motion.div key={`question-${step}`} variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8">
+            <motion.div key={`question-${step}`} variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-7">
               <h1 className="text-2xl font-bold text-ink leading-tight text-center">
                 {questions[step - 1].title}
               </h1>
-
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {questions[step - 1].options.map(option => {
                   const qId = questions[step - 1].id;
                   const isSelected = answers[qId] === option.id;
@@ -191,7 +180,7 @@ export default function Onboarding() {
           )}
 
           {step === 4 && (
-            <motion.div key="recommend" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8 text-center">
+            <motion.div key="recommend" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-6 text-center">
               <p className="text-5xl font-semibold tracking-tight min-h-[60px]" aria-hidden="true">
                 {hiTyped.split('').map((ch, i) => (
                   <span
@@ -216,16 +205,32 @@ export default function Onboarding() {
                   {recommendedChallenge?.skill} · {recommendedChallenge?.difficulty}
                 </p>
               </div>
-              <button
-                onClick={finishOnboarding}
-                className="w-full bg-thinkers-orange text-white text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5 transition-all focus-visible:ring-2 focus-visible:ring-ink"
-              >
-                Empezar reto
-              </button>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {(step === 0 || step === 4) && (
+        <div className="w-full max-w-md pt-4 pb-2">
+          {step === 0 && (
+            <button
+              onClick={handleNext}
+              disabled={!userName.trim()}
+              className="w-full bg-thinkers-orange text-white text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5 transition-all disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-ink"
+            >
+              Continuar
+            </button>
+          )}
+          {step === 4 && (
+            <button
+              onClick={finishOnboarding}
+              className="w-full bg-thinkers-orange text-white text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5 transition-all focus-visible:ring-2 focus-visible:ring-ink"
+            >
+              Empezar reto
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
