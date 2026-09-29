@@ -29,11 +29,11 @@ const isSameThought = (a, b) => {
 
 const deepenIssue = (text, examples = []) => {
   const n = normalizeText(text);
-  if (!n) return 'Dilo en una frase: qué ves y qué le pusieron.';
-  if (looksEmptyThought(text)) return 'Si te trabas, pide un ejemplo y cámbialo a algo tuyo. No dejes “no sé”.';
-  if (examples.some((ex) => isSameThought(text, ex))) return 'Ese es el ejemplo. Cámbialo a algo de tu día.';
-  if (n.length < 12 || wordCount(text) < 4) return 'Falta intencionalidad. Una frase completa, no una palabra suelta.';
-  if (/^(.)\1{4,}$/.test(n.replace(/\s/g, ''))) return 'Eso no es una idea. Escríbelo como se lo contarías a alguien.';
+  if (!n) return 'Aún no hay una frase. Cuenta qué viste y qué le pusieron.';
+  if (looksEmptyThought(text)) return 'Eso es rendirse. Pide un ejemplo y cámbiale una parte.';
+  if (examples.some((ex) => isSameThought(text, ex))) return 'Copiaste el ejemplo. Cambia el objeto: que sea de tu casa o tu calle.';
+  if (n.length < 12 || wordCount(text) < 4) return 'Muy corto. Dilo como se lo cuentas a un amigo, en una frase.';
+  if (/^(.)\1{4,}$/.test(n.replace(/\s/g, ''))) return 'Eso no cuenta. Una idea, aunque sea simple.';
   return null;
 };
 
@@ -151,11 +151,19 @@ export default function Challenge() {
     const hints = challenge.opportunity_hints || [];
     const issues = (challenge.opportunity_blanks || []).map((_, i) => blankIssue(oppBlanks[i], hints[i]));
     if (issues.includes('hint')) {
-      setFormMsg('Ese texto es el ejemplo del espacio. Pon algo de tu día.');
+      setFormMsg('Ahí pegaste el ejemplo. Pon algo que veas tú.');
+      return;
+    }
+    if (issues.includes('generic')) {
+      setFormMsg('“Cosa” o “algo” no dicen nada. Nombra el objeto.');
+      return;
+    }
+    if (issues.includes('short') || issues.includes('empty')) {
+      setFormMsg('Muy corto. Dos palabras mínimo, como “el enchufe viejo”.');
       return;
     }
     if (issues.some(Boolean)) {
-      setFormMsg('Cada espacio necesita al menos dos palabras tuyas, no del ejemplo.');
+      setFormMsg('Completa cada espacio con palabras tuyas.');
       return;
     }
     handleNext();
@@ -381,13 +389,17 @@ export default function Challenge() {
       )}
       {step === 3 && (
         <div className="w-full max-w-md pt-4 pb-2 space-y-3">
-          {formMsg && <p className="text-sm font-medium text-ink text-center">{formMsg}</p>}
+          {formMsg && (
+            <p className="text-sm font-medium text-center text-thinkers-orange leading-snug">{formMsg}</p>
+          )}
           <button onClick={tryDeepenNext} disabled={!deepenText.trim()} className={ctaClass}>Continuar</button>
         </div>
       )}
       {step === 4 && (
         <div className="w-full max-w-md pt-4 pb-2 space-y-3">
-          {formMsg && <p className="text-sm font-medium text-ink text-center">{formMsg}</p>}
+          {formMsg && (
+            <p className="text-sm font-medium text-center text-thinkers-orange leading-snug">{formMsg}</p>
+          )}
           <button onClick={tryOpportunityNext} disabled={oppBlanks.some(b => !b.trim())} className={ctaClass}>Completar reto</button>
         </div>
       )}

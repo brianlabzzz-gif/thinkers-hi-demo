@@ -22,8 +22,8 @@ export default function Onboarding() {
   const nameLooksReal = (value) => {
     const raw = (value || '').trim();
     const letters = raw.replace(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/g, '');
-    if (letters.length < 2) return 'Escribe tu nombre de verdad, no una inicial.';
-    if (/^(test|asd|xxx|user|nombre|admin|hola)$/i.test(raw)) return 'Ese no parece un nombre. Pon cómo quieres que te llamemos.';
+    if (letters.length < 2) return 'Con eso no sabemos cómo llamarte. Escribe tu nombre.';
+    if (/^(test|asd|xxx|user|nombre|admin|hola)$/i.test(raw)) return 'Eso parece un relleno. ¿Cómo te dicen de verdad?';
     return null;
   };
 
@@ -233,7 +233,9 @@ export default function Onboarding() {
         <div className="w-full max-w-md pt-4 pb-2">
           {step === 0 && (
             <>
-              {nameMsg && <p className="text-sm font-medium text-ink text-center mb-3">{nameMsg}</p>}
+              {nameMsg && (
+                <p className="text-sm font-medium text-center text-thinkers-orange leading-snug mb-3">{nameMsg}</p>
+              )}
               <button
                 onClick={handleNext}
                 disabled={!userName.trim()}
