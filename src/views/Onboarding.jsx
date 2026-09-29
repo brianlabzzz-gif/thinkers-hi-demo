@@ -103,9 +103,12 @@ export default function Onboarding() {
   };
 
   const finishOnboarding = () => {
+    const id = recommendedId;
     completeOnboarding({ ...answers, name: userName });
-    startChallenge(recommendedId);
-    navigate(`/challenge/${recommendedId}`);
+    startChallenge(id);
+    window.setTimeout(() => {
+      navigate(`/challenge/${id}`, { replace: true });
+    }, 0);
   };
 
   const progressPercent = (step / (totalSteps - 1)) * 100;

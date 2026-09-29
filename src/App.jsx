@@ -25,7 +25,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<PublicRoute><Welcome /></PublicRoute>} />
-      <Route path="/onboarding" element={<PublicRoute><Onboarding /></PublicRoute>} />
+      <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
       <Route path="/explore" element={<ProtectedRoute><Explore /></ProtectedRoute>} />
       <Route path="/journey" element={<ProtectedRoute><Journey /></ProtectedRoute>} />
