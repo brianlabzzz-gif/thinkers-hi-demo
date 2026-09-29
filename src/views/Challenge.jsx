@@ -105,9 +105,10 @@ export default function Challenge() {
     selectedOption &&
     challenge.correctOption &&
     selectedOption.id === challenge.correctOption;
-  const feedbackData = isCorrect
-    ? challenge.feedback.correct
-    : challenge.feedback.incorrect;
+  const feedbackData =
+    selectedOption?.feedback ||
+    (isCorrect ? challenge.feedback?.correct : challenge.feedback?.incorrect) ||
+    { title: 'Miremos eso con calma.', text: 'Esa lectura es un punto de partida. Ahora viene la segunda mirada.' };
   const phrase = fillOpportunityTemplate(challenge.opportunity_template, oppBlanks);
   const stuck = /no s[eé]|no tengo idea|ayud[ae]|help|\?{2,}|^\s*$/i.test(deepenText);
   const insertExample = () => {
@@ -197,6 +198,11 @@ export default function Challenge() {
           {step === 2 && (
             <motion.div key="step2" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-6 text-center">
               <h1 className="text-2xl font-bold text-ink">{feedbackData.title}</h1>
+              {selectedOption?.text && (
+                <p className="text-sm font-medium text-ink-muted">
+                  Elegiste: {selectedOption.text}
+                </p>
+              )}
               <p className="text-lg font-medium text-ink-muted bg-white p-6 rounded-3xl border-2 border-ink/10 shadow-sm leading-relaxed text-left">
                 {feedbackData.text}
               </p>

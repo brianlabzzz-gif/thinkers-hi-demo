@@ -9,20 +9,31 @@ export const challenges = [
     question: '¿Para qué crees que le ponen ese cartón?',
     correctOption: 'opt2',
     options: [
-      { id: 'opt1', text: 'Para que el vaso no queme las manos.' },
-      { id: 'opt2', text: 'Para no tener que hacer todos los vasos más gruesos.' },
-      { id: 'opt3', text: 'Para poner el logo o un mensaje.' }
-    ],
-    feedback: {
-      correct: {
-        title: 'Eso casi nadie lo ve primero.',
-        text: 'Sí, el cartón evita que queme. Pero si solo vieras el calor, la respuesta sería “haz el vaso más grueso”. No lo hacen: fabrican un vaso barato y delgado para todo, y solo agregan el cartón cuando la bebida va caliente. Observar bien es notar el extra que se puso después, no solo el problema obvio.'
+      {
+        id: 'opt1',
+        text: 'Para que el vaso no queme las manos.',
+        feedback: {
+          title: 'Eso se ve de una vez. Falta la segunda mirada.',
+          text: 'Sí: el cartón evita que te quemes. Esa es la primera función, la que cualquiera nota. La pregunta de observación es la de atrás: si el problema fuera solo el calor, harían un vaso grueso y listo. No lo hacen. Fabrican un vaso delgado para todo y solo agregan el cartón cuando va caliente. Elegiste el problema visible. Ahora mira el atajo de costo que lo sostiene.'
+        }
       },
-      incorrect: {
-        title: 'Eso se ve de una vez. Falta la segunda mirada.',
-        text: 'El calor y el logo se notan al primer vistazo. La pregunta de observación es otra: ¿por qué no hicieron un solo vaso grueso y listo? Porque sale más caro. El cartón es un agregado barato encima de un vaso delgado. Cuando algo se puso después, casi siempre hay un costo o un atajo escondido.'
+      {
+        id: 'opt2',
+        text: 'Para no tener que hacer todos los vasos más gruesos.',
+        feedback: {
+          title: 'Eso casi nadie lo ve primero.',
+          text: 'Exacto. El calor se nota solo. Lo que suele quedar atrás es el sistema: un solo vaso barato y delgado para frío y caliente, y un cartón nada más cuando hace falta. Observar bien es notar el extra que se puso después, no solo lo que toca la mano.'
+        }
+      },
+      {
+        id: 'opt3',
+        text: 'Para poner el logo o un mensaje.',
+        feedback: {
+          title: 'Puede pasar. No es por lo que nació el cartón.',
+          text: 'Algunas marcas sí imprimen en el cartón. Eso es un uso de segundo piso. Si quitas logos, el cartón sigue existiendo: el vaso delgado quema. Elegiste un efecto lateral. La observación más fuerte es el agregado de costo encima de un vaso que, de origen, no da abasto.'
+        }
       }
-    },
+    ],
     deepen_prompt: 'Ahora aplícalo a tu día. ¿Qué cosa ves que le pusieron un extra porque de origen no alcanza? Escríbelo en una frase completa: qué es y qué le agregaron.',
     opportunity_blanks: ['el objeto', 'el extra que le ponen'],
     opportunity_template: 'En ______ le ponen ______ porque así, de origen, no alcanza.',
@@ -43,20 +54,31 @@ export const challenges = [
     question: 'Además de verse, ¿qué otra cosa puede estar pasando?',
     correctOption: 'opt1',
     options: [
-      { id: 'opt1', text: 'La espera se siente más corta.' },
-      { id: 'opt2', text: 'El elevador se siente más grande.' },
-      { id: 'opt3', text: 'La gente llega más arreglada a su piso.' }
-    ],
-    feedback: {
-      correct: {
-        title: 'Ahí está el problema de verdad.',
-        text: 'En varios edificios las quejas eran “el elevador está lento”. Pusieron espejos y bajaron las quejas. No lo hicieron más rápido. Cambiaron lo que haces mientras esperas, y el tiempo se siente distinto. Observar es separar el problema técnico (velocidad) del problema que la gente siente (aburrirse parada).'
+      {
+        id: 'opt1',
+        text: 'La espera se siente más corta.',
+        feedback: {
+          title: 'Ahí está el problema que la gente sentía.',
+          text: 'En varios edificios las quejas eran “el elevador está lento”. Pusieron espejos y bajaron las quejas. No movieron el motor. Ocuparon la espera. Elegiste el problema que se siente, no el técnico. Esa es la segunda mirada: a veces no hay que hacer el proceso más rápido, hay que cambiar lo que pasa mientras tanto.'
+        }
       },
-      incorrect: {
-        title: 'Puede ser, pero no era el problema que estaban resolviendo.',
-        text: 'Un espejo sí puede hacer que el espacio se sienta más grande o que alguien se arregle. En la práctica, lo que bajó fueron las quejas de “esto está lento”. No movieron el motor. Ocuparon la espera. Si solo ves el objeto, te pierdes el problema que la gente estaba gritando.'
+      {
+        id: 'opt2',
+        text: 'El elevador se siente más grande.',
+        feedback: {
+          title: 'Puede sentirse así. No era la queja que estaban resolviendo.',
+          text: 'Un espejo sí puede abrir el espacio. En la práctica, lo que bajó no fueron quejas de “está apretado”: fueron quejas de “está lento”. Elegiste un efecto de diseño. El problema que la gente gritaba era el tiempo parado. Observar es escuchar de qué se quejan, no solo qué hace el objeto.'
+        }
+      },
+      {
+        id: 'opt3',
+        text: 'La gente llega más arreglada a su piso.',
+        feedback: {
+          title: 'Eso pasa. Es un efecto, no el problema.',
+          text: 'Sí, alguien se peina. Eso no explica por qué un edificio pone el espejo después de quejas. Elegiste lo que ves hacer a las personas. La observación más fuerte es lo que dejan de sentir: que la espera se come. El espejo no arregla el pelo del edificio; ocupa el aburrimiento.'
+        }
       }
-    },
+    ],
     deepen_prompt: '¿Dónde te toca esperar mucho en la semana (fila, bus, consulta, comida)? Escríbelo y di qué pondrías para que la espera se sienta distinta, sin hacer el proceso más rápido.',
     opportunity_blanks: ['dónde esperas', 'qué pondrías'],
     opportunity_template: 'En ______ la espera se sentiría mejor si hubiera ______.',
@@ -77,20 +99,31 @@ export const challenges = [
     question: 'Si cuestionas esa regla, ¿qué estamos dando por hecho?',
     correctOption: 'opt3',
     options: [
-      { id: 'opt1', text: 'Que estar más tiempo es trabajar más.' },
-      { id: 'opt2', text: 'Que todos rinden a la misma hora.' },
-      { id: 'opt3', text: 'Que lo que cuenta es el reloj, no el resultado.' }
-    ],
-    feedback: {
-      correct: {
-        title: 'Nombraste la regla de fondo.',
-        text: 'Las otras dos son pedazos de lo mismo. La regla escondida es: medimos presencia, no valor. Cuestionar no es pelear. Es decir en voz alta lo que todos dan por hecho y preguntar: ¿y si midiera otra cosa?'
+      {
+        id: 'opt1',
+        text: 'Que estar más tiempo es trabajar más.',
+        feedback: {
+          title: 'Vas bien, pero es una consecuencia, no la regla de fondo.',
+          text: 'Sí, mucha gente cree que más horas es más trabajo. Eso nace de algo más hondo: el reloj vale más que el resultado. Si solo atacas “estar sentado”, puedes cambiar el horario y seguir midiendo presencia. Elegiste el síntoma. Nombra lo que se mide y la regla se cae.'
+        }
       },
-      incorrect: {
-        title: 'Vas bien, pero te quedaste en un pedazo.',
-        text: 'Sí, mucha gente cree que más horas es más trabajo, o que todos rinden igual. Esas son consecuencias. La regla de fondo es una sola: el reloj vale más que el resultado. Si no nombras esa, la regla sigue viva aunque cambies el horario.'
+      {
+        id: 'opt2',
+        text: 'Que todos rinden a la misma hora.',
+        feedback: {
+          title: 'También se asume eso. No es el centro de la regla.',
+          text: 'Es cierto que el 9 a 5 trata a todos como si rindieran igual. Aun así, podrías tener horarios distintos y seguir premiando quién se queda más. Elegiste una injusticia real. La regla de fondo es otra: cuenta el reloj, no lo que quedó hecho.'
+        }
+      },
+      {
+        id: 'opt3',
+        text: 'Que lo que cuenta es el reloj, no el resultado.',
+        feedback: {
+          title: 'Nombraste la regla de fondo.',
+          text: 'Las otras dos son pedazos de lo mismo. Aquí está el supuesto que nadie discute: presencia vale más que valor. Cuestionar no es pelear. Es decir eso en voz alta y preguntar qué pasaría si midieras otra cosa.'
+        }
       }
-    },
+    ],
     deepen_prompt: 'En tu casa, estudio o trabajo, ¿qué regla se sigue “porque siempre se ha hecho así”? Escríbela en una frase y di qué medirías en su lugar.',
     opportunity_blanks: ['la regla', 'lo que medirías en su lugar'],
     opportunity_template: '¿Qué pasaría si dejamos la regla de ______ y en su lugar medimos ______?',
@@ -111,20 +144,31 @@ export const challenges = [
     question: 'Si no la necesita para hablarte, ¿para qué sigue usándola?',
     correctOption: 'opt2',
     options: [
-      { id: 'opt1', text: 'Por costumbre del lugar.' },
-      { id: 'opt2', text: 'Para que se note que es el doctor y genere confianza.' },
-      { id: 'opt3', text: 'Por higiene, aunque en esa consulta no se use.' }
-    ],
-    feedback: {
-      correct: {
-        title: 'Separaste lo que hace de lo que comunica.',
-        text: 'La bata a veces no opera ni revisa: avisa “aquí hay un profesional”. Por eso da confianza. Cuestionar es preguntar qué parte sirve de verdad y qué parte solo se ve bien. Si quitas la bata y la confianza se cae, el servicio no se estaba sosteniendo solo.'
+      {
+        id: 'opt1',
+        text: 'Por costumbre del lugar.',
+        feedback: {
+          title: 'La costumbre explica que siga. No explica para qué sirve.',
+          text: '“Siempre se ha usado” es cómo sobrevive una regla, no para qué está. Si te quedas ahí, no cuestionas nada: solo describes inercia. En una consulta que es conversación, la bata sigue sobre todo como aviso: este es el doctor. Pregunta qué pasaría si no la usara y el trabajo fuera el mismo.'
+        }
       },
-      incorrect: {
-        title: 'Puede ser parte, no es el centro.',
-        text: 'Costumbre e higiene existen. En una consulta que es solo conversación, la bata sigue ahí sobre todo como aviso: “este es el doctor”. Si te quedas en la costumbre, no cuestionas nada. La pregunta útil es: ¿qué pasaría si no la usara y el trabajo fuera el mismo?'
+      {
+        id: 'opt2',
+        text: 'Para que se note que es el doctor y genere confianza.',
+        feedback: {
+          title: 'Separaste lo que hace de lo que comunica.',
+          text: 'La bata a veces no opera ni revisa: avisa “aquí hay un profesional”. Por eso da confianza. Cuestionar es preguntar qué parte sirve de verdad y qué parte solo se ve bien. Si la quitas y la confianza se cae, el servicio no se estaba sosteniendo solo.'
+        }
+      },
+      {
+        id: 'opt3',
+        text: 'Por higiene, aunque en esa consulta no se use.',
+        feedback: {
+          title: 'En otra consulta sí. En esta, se queda corta.',
+          text: 'La higiene justifica la bata cuando hay contacto o procedimiento. Elegiste una razón real para otro momento. Aquí el doctor habla y escribe. Si la higiene no está en juego y la bata sigue, está haciendo otro trabajo: verse como doctor. Esa es la pregunta que faltaba.'
+        }
       }
-    },
+    ],
     deepen_prompt: '¿Qué usas tú o tu trabajo para que la gente confíe? Un título, un uniforme, un logo, una forma de hablar. Escríbelo y di qué pasaría si no lo tuvieras.',
     opportunity_blanks: ['con quién quieres más confianza', 'qué cambiarías'],
     opportunity_template: 'Podríamos generar más confianza con ______ si cambiamos ______.',
@@ -145,20 +189,31 @@ export const challenges = [
     question: 'Si quisieras que se sienta más fácil, ¿de dónde tomarías una idea que ya funciona?',
     correctOption: 'opt1',
     options: [
-      { id: 'opt1', text: 'De un juego: niveles, puntos, no romper la racha.' },
-      { id: 'opt2', text: 'De una serie: terminar cada bloque con ganas de seguir.' },
-      { id: 'opt3', text: 'De un video corto: poco texto, ritmo rápido.' }
-    ],
-    feedback: {
-      correct: {
-        title: 'Esa es una asociación clara.',
-        text: 'Los juegos ya resolvieron cómo hacer que alguien vuelva mañana: racha, nivel, premio chico. Mover eso a estudiar o trabajar no es copiar el juego: es copiar la regla que hace que no sueltes. Duolingo hizo exactamente eso con los idiomas.'
+      {
+        id: 'opt1',
+        text: 'De un juego: niveles, puntos, no romper la racha.',
+        feedback: {
+          title: 'Esa es la asociación más justa con este problema.',
+          text: 'El problema no era “esta sesión es aburrida”. Era que no avanzas día tras día. Los juegos ya resolvieron la repetición: racha, nivel, premio chico. Mover eso a estudiar o trabajar no es copiar el juego: es copiar la regla que hace que no sueltes. Duolingo hizo eso con los idiomas.'
+        }
       },
-      incorrect: {
-        title: 'También es asociar, pero esa idea es más débil para volver mañana.',
-        text: 'Una serie o un video corto ayudan con el ritmo de una sesión. El problema que planteamos era otro: que no avanzas y se te hace pesado día tras día. Los juegos resolvieron la repetición (racha, nivel). Si tomas prestado del lugar equivocado, copias la forma y no el problema que ya tenían resuelto.'
+      {
+        id: 'opt2',
+        text: 'De una serie: terminar cada bloque con ganas de seguir.',
+        feedback: {
+          title: 'Sirve para una sesión. Se queda corta para volver mañana.',
+          text: 'Terminar con ganas de seguir ayuda a no apagar hoy. El escenario era otro: se te hace pesado y casi no avanzas en los días. Elegiste ritmo de un capítulo. La asociación más fuerte para volver mañana está en los juegos: racha y nivel. Copia la regla que resuelve tu problema, no la que resuelve otro.'
+        }
+      },
+      {
+        id: 'opt3',
+        text: 'De un video corto: poco texto, ritmo rápido.',
+        feedback: {
+          title: 'Eso aligera el formato. No resuelve el hábito.',
+          text: 'Cortar en pedazos chicos ayuda a empezar. No explica por qué mañana lo vuelves a dejar. Elegiste una idea de empaque. El problema era constancia. Los juegos ya tenían respuesta para eso. Si tomas prestado del lugar equivocado, copias la forma y dejas el problema intacto.'
+        }
       }
-    },
+    ],
     deepen_prompt: 'Piensa en tu app, juego, tienda o lugar favorito. ¿Qué detalle pequeño de ahí usarías esta semana en una tarea tuya? Escríbelo así: de dónde lo sacas y en qué lo vas a usar.',
     opportunity_blanks: ['la idea prestada', 'dónde la usarías'],
     opportunity_template: 'Podríamos usar la idea de ______ para mejorar cómo ______.',
@@ -167,7 +222,7 @@ export const challenges = [
       'De una plataforma de series tomo el “seguir viendo” para retomar una tarea que dejé a medias.',
       'De un juego tomo los niveles para partir un trabajo grande en pedazos que sí puedo terminar hoy.'
     ],
-    close_feedback: 'Pediste prestada una idea de otro mundo. No tuviste que inventar desde cero. El truco es copiar la regla, no la decoración.'
+    close_feedback: 'Pediste prestada una idea de otro mundo. El truco es copiar la regla que ya resolvió tu problema, no la decoración.'
   },
   {
     id: 'ASO-02',
@@ -179,20 +234,31 @@ export const challenges = [
     question: 'Ese momento se parece más a:',
     correctOption: 'opt1',
     options: [
-      { id: 'opt1', text: 'Cambiar las llantas de un carro en segundos, en equipo.' },
-      { id: 'opt2', text: 'Una cocina llena en la hora de almuerzo.' },
-      { id: 'opt3', text: 'Una mudanza rápida: sacar, mover y volver a conectar.' }
-    ],
-    feedback: {
-      correct: {
-        title: 'Esa es la conexión que ya funcionó en la vida real.',
-        text: 'Un hospital miró cómo un equipo de carreras cambia las llantas: cada persona tiene un solo movimiento, ensayan, y en segundos queda listo. Copiaron esa forma de trabajar, no el carro. Bajaron los errores. Asociar es buscar quién ya resolvió el mismo tipo de caos en otro oficio.'
+      {
+        id: 'opt1',
+        text: 'Cambiar las llantas de un carro en segundos, en equipo.',
+        feedback: {
+          title: 'Esa es la conexión que ya funcionó en la vida real.',
+          text: 'Un hospital miró un cambio de llantas en carreras: cada persona un solo movimiento, se ensaya, en segundos queda listo. Copiaron esa forma de trabajar, no el carro. Bajaron los errores. Elegiste un mundo que ya había resuelto el mismo tipo de caos.'
+        }
       },
-      incorrect: {
-        title: 'Hay parecido, pero no es el mejor préstamo.',
-        text: 'Una cocina o una mudanza también son caos con mucha gente. La diferencia: en las carreras el equipo ensaya el mismo movimiento hasta que no falla, y cada quien toca una sola cosa. Si asocias con un mundo que también está desordenado, copias el desorden. Hay que buscar quién ya lo resolvió.'
+      {
+        id: 'opt2',
+        text: 'Una cocina llena en la hora de almuerzo.',
+        feedback: {
+          title: 'Hay parecido. Ese mundo todavía está desordenado.',
+          text: 'Sí: mucha gente, poco tiempo, fácil equivocarse. El problema es que una cocina en hora pico también falla. Si asocias con un oficio que comparte el caos, copias el caos. El préstamo útil es un equipo de carreras: ensayan el mismo movimiento hasta que no falla, y cada quien toca una sola cosa.'
+        }
+      },
+      {
+        id: 'opt3',
+        text: 'Una mudanza rápida: sacar, mover y volver a conectar.',
+        feedback: {
+          title: 'Se parece en los cables. No en el método.',
+          text: 'Una mudanza también desarma y reconecta. Casi nunca está ensayada ni tiene un rol por persona. Elegiste la imagen de los objetos. La asociación fuerte es la del equipo que ya midió los segundos y partió el trabajo. Copia cómo lo hacen cuando les sale bien, no cuando también improvisan.'
+        }
       }
-    },
+    ],
     deepen_prompt: 'Elige un problema de tu semana. ¿A qué otro oficio se parece, y cómo lo resuelven ellos? Escríbelo en una frase completa.',
     opportunity_blanks: ['tu problema', 'el otro oficio', 'cómo lo resuelven'],
     opportunity_template: 'El problema de ______ se parece a cómo ______ resuelve ______.',
