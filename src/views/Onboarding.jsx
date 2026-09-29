@@ -19,17 +19,19 @@ export default function Onboarding() {
   });
 
   const totalSteps = 5;
-  const HI_FULL = 'HI.';
+  const HI_BEATS = ['', 'H', 'HI', 'HI.'];
 
   useEffect(() => {
     if (step !== 4) {
       setHiTyped('');
       return;
     }
-    if (hiTyped === HI_FULL) return;
+    const i = HI_BEATS.indexOf(hiTyped);
+    if (i >= HI_BEATS.length - 1) return;
+    const waits = [400, 400, 400];
     const t = setTimeout(() => {
-      setHiTyped(HI_FULL.slice(0, hiTyped.length + 1));
-    }, hiTyped.length === 0 ? 280 : 160);
+      setHiTyped(HI_BEATS[i < 0 ? 1 : i + 1]);
+    }, waits[Math.max(0, i)] || 400);
     return () => clearTimeout(t);
   }, [step, hiTyped]);
 
@@ -38,30 +40,30 @@ export default function Onboarding() {
       id: 'interest',
       title: `${userName}, ¿qué suele despertar tu curiosidad?`,
       options: [
-        { id: 'opt1', label: 'Entender cómo funciona algo', icon: '🔍' },
-        { id: 'opt2', label: 'Saber por qué hacemos las cosas así', icon: '🤔' },
-        { id: 'opt3', label: 'Imaginar otros usos para las cosas', icon: '✨' },
-        { id: 'opt4', label: 'Un poco de todo', icon: '🌍' }
+        { id: 'opt1', label: 'Entender cómo funciona algo' },
+        { id: 'opt2', label: 'Saber por qué hacemos las cosas así' },
+        { id: 'opt3', label: 'Imaginar otros usos para las cosas' },
+        { id: 'opt4', label: 'Un poco de todo' }
       ]
     },
     {
       id: 'context',
       title: '¿Dónde sueles pensar "esto podría ser mejor"?',
       options: [
-        { id: 'opt1', label: 'En mi trabajo o negocio', icon: '💼' },
-        { id: 'opt2', label: 'En mis estudios', icon: '📚' },
-        { id: 'opt3', label: 'En mis actividades diarias', icon: '🏠' },
-        { id: 'opt4', label: 'En los lugares por donde paso', icon: '🚶' }
+        { id: 'opt1', label: 'En mi trabajo o negocio' },
+        { id: 'opt2', label: 'En mis estudios' },
+        { id: 'opt3', label: 'En mis actividades diarias' },
+        { id: 'opt4', label: 'En los lugares por donde paso' }
       ]
     },
     {
       id: 'help',
       title: 'Si algo no sale como esperabas, ¿qué haces?',
       options: [
-        { id: 'opt1', label: 'Miro con más atención qué pasó', icon: '👀' },
-        { id: 'opt2', label: 'Pregunto para entenderlo mejor', icon: '🗣️' },
-        { id: 'opt3', label: 'Pruebo otra manera de hacerlo', icon: '🔄' },
-        { id: 'opt4', label: 'Busco un ejemplo que me guía', icon: '📖' }
+        { id: 'opt1', label: 'Miro con más atención qué pasó' },
+        { id: 'opt2', label: 'Pregunto para entenderlo mejor' },
+        { id: 'opt3', label: 'Pruebo otra manera de hacerlo' },
+        { id: 'opt4', label: 'Busco un ejemplo que me guía' }
       ]
     }
   ];
@@ -69,6 +71,14 @@ export default function Onboarding() {
   const recommendedId = recommendedChallengeId(answers.interest);
   const recommendedSkill = skillForInterest(answers.interest);
   const recommendedChallenge = challenges.find(c => c.id === recommendedId);
+
+  const skillIntro = {
+    Observación: 'Observar es notar lo que otros pasan por alto. Los innovadores la usan para detectar problemas reales antes de inventar soluciones.',
+    Cuestionamiento: 'Cuestionar es preguntar por qué las cosas son así. Sirve para abrir caminos que un “siempre se ha hecho así” deja cerrados.',
+    Asociación: 'Asociar es unir ideas que no suelen ir juntas. Es cómo nace un producto nuevo a partir de dos mundos que ya conocías.',
+    Experimentación: 'Experimentar es probar en pequeño. Baja el miedo a equivocarse y te dice rápido qué funciona.',
+    'Red de contactos': 'La red no es recolectar tarjetas: es pedir perspectiva a alguien que vive otro contexto. Las mejores ideas casi nunca nacen solas.'
+  };
 
   const handleNext = () => {
     if (step === 0 && !userName.trim()) return;
@@ -109,6 +119,7 @@ export default function Onboarding() {
   return (
     <div className="min-h-screen bg-soft-surface text-ink flex flex-col items-center p-6 relative overflow-hidden">
       <div className="w-full max-w-md flex items-center gap-4 mt-4 z-20">
+        {step < 4 ? (
         <button
           onClick={handleBack}
           className="text-ink-muted text-2xl font-bold p-2 hover:bg-ink/5 rounded-xl transition-colors focus-visible:ring-2 focus-visible:ring-thinkers-orange"
@@ -116,6 +127,9 @@ export default function Onboarding() {
         >
           ←
         </button>
+        ) : (
+        <div className="w-10" />
+        )}
         <div className="flex-1 h-4 bg-ink/10 rounded-full overflow-hidden" role="progressbar" aria-valuenow={step} aria-valuemin={0} aria-valuemax={totalSteps - 1}>
           <motion.div
             className="h-full bg-thinkers-orange rounded-full"
@@ -149,7 +163,7 @@ export default function Onboarding() {
                 <button
                   onClick={handleNext}
                   disabled={!userName.trim()}
-                  className="w-full bg-thinkers-orange text-white text-xl font-bold py-5 rounded-2xl shadow-[0_6px_0_#C52707] active:shadow-[0_0px_0_#C52707] active:translate-y-1 transition-all disabled:opacity-50 disabled:shadow-[0_6px_0_rgba(0,0,0,0.1)] focus-visible:ring-2 focus-visible:ring-ink"
+                  className="w-full bg-thinkers-orange text-white text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5 transition-all disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-ink"
                 >
                   Continuar
                 </button>
@@ -173,14 +187,13 @@ export default function Onboarding() {
                       key={option.id}
                       disabled={isTransitioning}
                       onClick={() => selectOption(qId, option.id)}
-                      className={`w-full flex items-center p-5 rounded-2xl border-2 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-thinkers-orange ${
+                      className={`w-full flex items-center p-5 rounded-2xl border-2 text-left transition-all duration-200 focus-visible:ring-2 focus-visible:ring-thinkers-orange ${
                         isSelected
-                          ? 'border-thinkers-orange bg-thinkers-orange/10 shadow-[0_4px_0_#C52707] scale-[0.98] translate-y-1'
-                          : 'border-ink/10 bg-white hover:border-ink/30 shadow-[0_4px_0_rgba(29,26,23,0.1)] active:shadow-[0_0px_0_rgba(29,26,23,0.1)] active:translate-y-1'
+                          ? 'border-thinkers-orange bg-thinkers-orange/10'
+                          : 'border-ink/10 bg-white hover:border-ink/30'
                       } disabled:pointer-events-none`}
                     >
-                      <span className="text-3xl mr-4" aria-hidden="true">{option.icon}</span>
-                      <span className="text-lg font-bold text-ink/90 text-left">
+                      <span className="text-lg font-semibold text-ink text-left">
                         {option.label}
                       </span>
                     </button>
@@ -203,8 +216,11 @@ export default function Onboarding() {
                 ))}
               </p>
               <h1 className="text-2xl font-bold text-ink">Listo, {userName}.</h1>
-              <p className="text-lg font-bold text-ink-muted">
-                Vas a empezar por <span className="text-thinkers-orange">{recommendedSkill}</span>.
+              <p className="text-lg font-bold text-ink">
+                Empecemos por un reto de <span className="text-thinkers-orange">{recommendedSkill}</span>.
+              </p>
+              <p className="text-base text-ink-muted leading-relaxed px-1">
+                {skillIntro[recommendedSkill] || 'Esta habilidad es una de las que usan quienes detectan oportunidades y las convierten en algo concreto.'}
               </p>
               <div className="bg-white p-6 rounded-3xl border-2 border-ink/10 shadow-sm text-left">
                 <p className="text-xs font-bold text-ink-muted uppercase mb-1">Primer reto</p>
@@ -215,9 +231,9 @@ export default function Onboarding() {
               </div>
               <button
                 onClick={finishOnboarding}
-                className="w-full bg-thinkers-orange text-white text-xl font-bold py-5 rounded-2xl shadow-[0_6px_0_#C52707] active:shadow-[0_0px_0_#C52707] active:translate-y-1 transition-all focus-visible:ring-2 focus-visible:ring-ink"
+                className="w-full bg-thinkers-orange text-white text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5 transition-all focus-visible:ring-2 focus-visible:ring-ink"
               >
-                Empezar primer reto
+                Empezar reto
               </button>
             </motion.div>
           )}
