@@ -4,6 +4,49 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
 import { challenges, getNextChallenge, fillOpportunityTemplate } from '../data/mockChallenges';
 
+const normalizeText = (s = '') =>
+  s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9ñáéíóúü\s]/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const wordCount = (s = '') => normalizeText(s).split(' ').filter(Boolean).length;
+
+const looksEmptyThought = (s = '') =>
+  /^(no se|no se que|no se que poner|no tengo idea|nada|idk|help|ayuda|asd+|q+|test|prueba|hola|na|n a|\?+)$/i.test(
+    normalizeText(s)
+  );
+
+const isSameThought = (a, b) => {
+  const left = normalizeText(a);
+  const right = normalizeText(b);
+  if (!left || !right) return false;
+  return left === right || (left.length > 18 && (left.includes(right) || right.includes(left)));
+};
+
+const deepenIssue = (text, examples = []) => {
+  const n = normalizeText(text);
+  if (!n) return 'Dilo en una frase: qué ves y qué le pusieron.';
+  if (looksEmptyThought(text)) return 'Si te trabas, pide un ejemplo y cámbialo a algo tuyo. No dejes “no sé”.';
+  if (examples.some((ex) => isSameThought(text, ex))) return 'Ese es el ejemplo. Cámbialo a algo de tu día.';
+  if (n.length < 12 || wordCount(text) < 4) return 'Falta intencionalidad. Una frase completa, no una palabra suelta.';
+  if (/^(.)\1{4,}$/.test(n.replace(/\s/g, ''))) return 'Eso no es una idea. Escríbelo como se lo contarías a alguien.';
+  return null;
+};
+
+const blankIssue = (text, hint) => {
+  const n = normalizeText(text);
+  if (!n) return 'empty';
+  if (looksEmptyThought(text)) return 'generic';
+  if (hint && isSameThought(text, hint)) return 'hint';
+  if (wordCount(text) < 2) return 'short';
+  if (/^(cosa|objeto|extra|algo|esto|eso|nada|test|asd|ejemplo)$/i.test(n)) return 'generic';
+  return null;
+};
+
 export default function Challenge() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -32,6 +75,7 @@ export default function Challenge() {
   });
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [exampleIndex, setExampleIndex] = useState(0);
+  const [formMsg, setFormMsg] = useState('');
   const skipPersist = React.useRef(true);
   const activeId = challenge?.id;
 
@@ -65,6 +109,7 @@ export default function Challenge() {
 
     setExampleIndex(0);
     setIsTransitioning(false);
+    setFormMsg('');
 
     const t = setTimeout(() => {
       skipPersist.current = false;
@@ -84,11 +129,36 @@ export default function Challenge() {
   if (!challenge) return null;
 
   const updateBlank = (index, value) => {
+    setFormMsg('');
     setOppBlanks(prev => prev.map((b, i) => i === index ? value : b));
   };
 
   const handleNext = () => {
+    setFormMsg('');
     if (step < 5) setStep(step + 1);
+  };
+
+  const tryDeepenNext = () => {
+    const issue = deepenIssue(deepenText, challenge.help_examples || []);
+    if (issue) {
+      setFormMsg(issue);
+      return;
+    }
+    handleNext();
+  };
+
+  const tryOpportunityNext = () => {
+    const hints = challenge.opportunity_hints || [];
+    const issues = (challenge.opportunity_blanks || []).map((_, i) => blankIssue(oppBlanks[i], hints[i]));
+    if (issues.includes('hint')) {
+      setFormMsg('Ese texto es el ejemplo del espacio. Pon algo de tu día.');
+      return;
+    }
+    if (issues.some(Boolean)) {
+      setFormMsg('Cada espacio necesita al menos dos palabras tuyas, no del ejemplo.');
+      return;
+    }
+    handleNext();
   };
 
   const selectAndAdvance = (opt) => {
@@ -216,7 +286,10 @@ export default function Challenge() {
               </h1>
               <textarea
                 value={deepenText}
-                onChange={(e) => setDeepenText(e.target.value)}
+                onChange={(e) => {
+                  setFormMsg('');
+                  setDeepenText(e.target.value);
+                }}
                 className="w-full text-lg font-medium bg-white border-2 border-ink/10 rounded-2xl p-6 focus:outline-none focus:border-thinkers-orange focus:ring-4 focus:ring-thinkers-orange/20 shadow-sm transition-all min-h-[150px]"
                 placeholder="Escribe tu idea en 2 o 3 frases."
                 aria-label="Tu idea"
@@ -307,13 +380,15 @@ export default function Challenge() {
         </div>
       )}
       {step === 3 && (
-        <div className="w-full max-w-md pt-4 pb-2">
-          <button onClick={handleNext} disabled={!deepenText.trim()} className={ctaClass}>Continuar</button>
+        <div className="w-full max-w-md pt-4 pb-2 space-y-3">
+          {formMsg && <p className="text-sm font-medium text-ink text-center">{formMsg}</p>}
+          <button onClick={tryDeepenNext} disabled={!deepenText.trim()} className={ctaClass}>Continuar</button>
         </div>
       )}
       {step === 4 && (
-        <div className="w-full max-w-md pt-4 pb-2">
-          <button onClick={handleNext} disabled={oppBlanks.some(b => !b.trim())} className={ctaClass}>Completar reto</button>
+        <div className="w-full max-w-md pt-4 pb-2 space-y-3">
+          {formMsg && <p className="text-sm font-medium text-ink text-center">{formMsg}</p>}
+          <button onClick={tryOpportunityNext} disabled={oppBlanks.some(b => !b.trim())} className={ctaClass}>Completar reto</button>
         </div>
       )}
       {step === 5 && (

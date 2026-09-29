@@ -12,11 +12,20 @@ export default function Onboarding() {
   const [userName, setUserName] = useState('');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [hiTyped, setHiTyped] = useState('');
+  const [nameMsg, setNameMsg] = useState('');
   const [answers, setAnswers] = useState({
     interest: null,
     context: null,
     help: null
   });
+
+  const nameLooksReal = (value) => {
+    const raw = (value || '').trim();
+    const letters = raw.replace(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/g, '');
+    if (letters.length < 2) return 'Escribe tu nombre de verdad, no una inicial.';
+    if (/^(test|asd|xxx|user|nombre|admin|hola)$/i.test(raw)) return 'Ese no parece un nombre. Pon cómo quieres que te llamemos.';
+    return null;
+  };
 
   const totalSteps = 5;
   const HI_BEATS = ['', 'H', 'HI', 'HI.'];
@@ -81,7 +90,14 @@ export default function Onboarding() {
   };
 
   const handleNext = () => {
-    if (step === 0 && !userName.trim()) return;
+    if (step === 0) {
+      const issue = nameLooksReal(userName);
+      if (issue) {
+        setNameMsg(issue);
+        return;
+      }
+    }
+    setNameMsg('');
     if (step < totalSteps - 1) {
       setStep(step + 1);
     }
@@ -138,7 +154,10 @@ export default function Onboarding() {
               <input
                 type="text"
                 value={userName}
-                onChange={(e) => setUserName(e.target.value)}
+                onChange={(e) => {
+                  setNameMsg('');
+                  setUserName(e.target.value);
+                }}
                 placeholder="Escribe tu nombre..."
                 aria-label="Tu nombre"
                 className="w-full text-2xl font-bold text-center bg-white border-2 border-ink/10 rounded-2xl p-6 focus:outline-none focus:border-thinkers-orange focus:ring-4 focus:ring-thinkers-orange/20 shadow-sm transition-all"
@@ -213,13 +232,16 @@ export default function Onboarding() {
       {(step === 0 || step === 4) && (
         <div className="w-full max-w-md pt-4 pb-2">
           {step === 0 && (
-            <button
-              onClick={handleNext}
-              disabled={!userName.trim()}
-              className="w-full bg-thinkers-orange text-white text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5 transition-all disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-ink"
-            >
-              Continuar
-            </button>
+            <>
+              {nameMsg && <p className="text-sm font-medium text-ink text-center mb-3">{nameMsg}</p>}
+              <button
+                onClick={handleNext}
+                disabled={!userName.trim()}
+                className="w-full bg-thinkers-orange text-white text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5 transition-all disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-ink"
+              >
+                Continuar
+              </button>
+            </>
           )}
           {step === 4 && (
             <button
