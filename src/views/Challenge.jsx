@@ -139,16 +139,14 @@ export default function Challenge() {
     exit: { opacity: 0, scale: 0.95, y: -10, transition: { duration: 0.2 } }
   };
 
+  const ctaClass =
+    'w-full bg-thinkers-orange text-white text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5 transition-all disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-ink';
+  const ghostClass =
+    'w-full bg-white text-ink text-lg font-bold py-3.5 rounded-full border-2 border-ink/10';
+
   return (
-    <div className="min-h-screen bg-soft-surface text-ink pb-24 relative flex flex-col items-center">
-      <header className="w-full max-w-md px-6 py-6 flex items-center gap-4 z-30">
-        <button
-          onClick={() => navigate('/home')}
-          className="text-2xl font-bold text-ink-muted hover:text-ink focus-visible:ring-2 focus-visible:ring-thinkers-orange rounded-lg p-1"
-          aria-label="Cerrar reto"
-        >
-          ✕
-        </button>
+    <div className="min-h-screen bg-soft-surface text-ink flex flex-col items-center p-6 relative overflow-hidden">
+      <header className="w-full max-w-md flex items-center gap-4 mt-4 z-20">
         <div className="flex-1 h-4 bg-ink/10 rounded-full overflow-hidden" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={5}>
           <motion.div
             className="h-full bg-thinkers-orange rounded-full"
@@ -159,29 +157,28 @@ export default function Challenge() {
         </div>
       </header>
 
-      <div className="w-full max-w-md p-6 flex-1 flex flex-col justify-start pt-4">
+      <div className="w-full max-w-md z-10 flex-1 flex flex-col pt-16 overflow-y-auto">
         <AnimatePresence mode="wait">
           {step === 1 && (
-            <motion.div key="step1" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8">
+            <motion.div key="step1" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-7">
               <div>
                 <h1 className="text-2xl font-bold text-ink mb-3">{challenge.title}</h1>
                 <p className="text-lg font-medium text-ink-muted bg-white p-4 rounded-2xl border-2 border-ink/10 shadow-sm leading-relaxed">
                   {challenge.scenario}
                 </p>
               </div>
-
-              <div className="space-y-4 pt-4">
+              <div className="space-y-3">
                 <h2 className="text-xl font-bold text-ink text-center">{challenge.question}</h2>
-                <p className="text-sm font-bold text-ink-muted text-center -mt-2 mb-4">¿Cuál te resuena más? No hay respuesta incorrecta.</p>
+                <p className="text-sm font-bold text-ink-muted text-center">¿Cuál te resuena más? No hay respuesta incorrecta.</p>
                 {challenge.options.map((opt) => (
                   <button
                     key={opt.id}
                     disabled={isTransitioning}
                     onClick={() => selectAndAdvance(opt)}
-                    className={`w-full text-left p-5 rounded-2xl border-2 transition-all duration-200 font-bold text-lg focus-visible:ring-2 focus-visible:ring-thinkers-orange ${
+                    className={`w-full text-left p-5 rounded-2xl border-2 transition-all duration-200 font-semibold text-lg focus-visible:ring-2 focus-visible:ring-thinkers-orange ${
                       selectedOption?.id === opt.id
-                        ? 'border-thinkers-orange bg-thinkers-orange/10 shadow-[0_4px_0_#C52707] text-thinkers-orange scale-[0.98] translate-y-1'
-                        : 'border-ink/10 bg-white hover:border-ink/30 shadow-[0_4px_0_rgba(29,26,23,0.1)] active:shadow-[0_0px_0_rgba(29,26,23,0.1)] active:translate-y-1'
+                        ? 'border-thinkers-orange bg-thinkers-orange/10'
+                        : 'border-ink/10 bg-white hover:border-ink/30'
                     } disabled:pointer-events-none`}
                   >
                     {opt.text}
@@ -192,35 +189,27 @@ export default function Challenge() {
           )}
 
           {step === 2 && (
-            <motion.div key="step2" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8 flex flex-col items-center text-center">
+            <motion.div key="step2" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-6 text-center">
               <h1 className="text-2xl font-bold text-ink">{feedbackData.title}</h1>
-              <p className="text-lg font-medium text-ink-muted bg-white p-6 rounded-3xl border-2 border-ink/10 shadow-sm leading-relaxed">
+              <p className="text-lg font-medium text-ink-muted bg-white p-6 rounded-3xl border-2 border-ink/10 shadow-sm leading-relaxed text-left">
                 {feedbackData.text}
               </p>
-              <button
-                onClick={handleNext}
-                className="w-full bg-thinkers-orange text-white text-xl font-bold py-5 rounded-2xl shadow-[0_6px_0_#C52707] active:shadow-[0_0px_0_#C52707] active:translate-y-1 transition-all mt-8 focus-visible:ring-2 focus-visible:ring-ink"
-              >
-                Entendido
-              </button>
             </motion.div>
           )}
 
           {step === 3 && (
-            <motion.div key="step3" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8">
+            <motion.div key="step3" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
               <h1 className="text-xl font-bold text-ink leading-relaxed">
                 {challenge.deepen_prompt}
               </h1>
-              <div className="pt-4">
-                <textarea
-                  value={deepenText}
-                  onChange={(e) => setDeepenText(e.target.value)}
-                  className="w-full text-xl font-bold bg-white border-2 border-ink/10 rounded-2xl p-6 focus:outline-none focus:border-thinkers-orange focus:ring-4 focus:ring-thinkers-orange/20 shadow-sm transition-all min-h-[150px]"
-                  placeholder="Escribe tu idea en 2 o 3 frases."
-                  aria-label="Tu idea"
-                  autoFocus
-                />
-              </div>
+              <textarea
+                value={deepenText}
+                onChange={(e) => setDeepenText(e.target.value)}
+                className="w-full text-lg font-medium bg-white border-2 border-ink/10 rounded-2xl p-6 focus:outline-none focus:border-thinkers-orange focus:ring-4 focus:ring-thinkers-orange/20 shadow-sm transition-all min-h-[150px]"
+                placeholder="Escribe tu idea en 2 o 3 frases."
+                aria-label="Tu idea"
+                autoFocus
+              />
               {(stuck || (challenge.help_examples && challenge.help_examples.length)) && (
                 <div className="space-y-2">
                   {stuck && (
@@ -231,28 +220,20 @@ export default function Challenge() {
                   <button
                     type="button"
                     onClick={insertExample}
-                    className="w-full bg-white text-thinkers-orange text-lg font-bold py-4 rounded-2xl border-2 border-thinkers-orange"
+                    className={ghostClass + ' text-thinkers-orange border-thinkers-orange'}
                   >
                     Dame un ejemplo
                   </button>
                 </div>
               )}
-              <button
-                onClick={handleNext}
-                disabled={!deepenText.trim()}
-                className="w-full bg-thinkers-orange text-white text-xl font-bold py-5 rounded-2xl shadow-[0_6px_0_#C52707] active:shadow-[0_0px_0_#C52707] active:translate-y-1 transition-all disabled:opacity-50 disabled:shadow-[0_6px_0_rgba(0,0,0,0.1)] focus-visible:ring-2 focus-visible:ring-ink"
-              >
-                Continuar
-              </button>
             </motion.div>
           )}
 
           {step === 4 && (
-            <motion.div key="step4" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8">
-              <div className="text-center space-y-4">
-                <span className="text-5xl" aria-hidden="true">🔨</span>
+            <motion.div key="step4" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
+              <div className="text-center space-y-2">
                 <h1 className="text-2xl font-bold text-ink">Arma tu oportunidad</h1>
-                <p className="text-lg font-bold text-ink-muted">Completa la frase:</p>
+                <p className="text-base text-ink-muted">Completa la frase.</p>
               </div>
               <div className="bg-white p-6 rounded-3xl border-2 border-ink/10 shadow-sm space-y-4">
                 <p className="font-bold text-ink text-lg">{challenge.opportunity_template}</p>
@@ -262,35 +243,19 @@ export default function Challenge() {
                     type="text"
                     placeholder={placeholder}
                     aria-label={placeholder}
-                    className="w-full text-lg font-bold bg-warm-canvas border-2 border-ink/10 rounded-xl p-4 focus:border-thinkers-orange outline-none focus:ring-4 focus:ring-thinkers-orange/20 transition-all"
+                    className="w-full text-lg font-medium bg-warm-canvas border-2 border-ink/10 rounded-xl p-4 focus:border-thinkers-orange outline-none focus:ring-4 focus:ring-thinkers-orange/20 transition-all"
                     value={oppBlanks[i] || ''}
                     onChange={e => updateBlank(i, e.target.value)}
                   />
                 ))}
               </div>
-              <button
-                onClick={handleNext}
-                disabled={oppBlanks.some(b => !b.trim())}
-                className="w-full bg-thinkers-orange text-white text-xl font-bold py-5 rounded-2xl shadow-[0_6px_0_#C52707] active:shadow-[0_0px_0_#C52707] active:translate-y-1 transition-all disabled:opacity-50 disabled:shadow-[0_6px_0_rgba(0,0,0,0.1)] focus-visible:ring-2 focus-visible:ring-ink"
-              >
-                Completar Reto
-              </button>
             </motion.div>
           )}
 
           {step === 5 && (
-            <motion.div key="step5" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8 text-center pt-8">
-              <motion.div
-                initial={{ scale: 0, rotate: -180 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ type: 'spring', bounce: 0.6, duration: 0.8 }}
-                className="w-32 h-32 bg-thinkers-orange rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_8px_0_#C52707]"
-              >
-                <span className="text-6xl" aria-hidden="true">🏆</span>
-              </motion.div>
-              <h1 className="text-3xl font-bold text-ink">¡Reto superado!</h1>
-              <p className="text-xl font-bold text-ink-muted">Excelente trabajo, {preferences?.name || 'innovador'}.</p>
-
+            <motion.div key="step5" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-6 text-center">
+              <h1 className="text-3xl font-bold text-ink">Reto superado</h1>
+              <p className="text-lg text-ink-muted">Buen trabajo, {preferences?.name || 'innovador'}.</p>
               <div className="text-left space-y-3">
                 {selectedOption?.text && (
                   <div className="bg-white p-4 rounded-2xl border-2 border-ink/10">
@@ -311,40 +276,42 @@ export default function Challenge() {
                 {challenge.close_feedback && (
                   <div className="bg-thinkers-orange/10 p-4 rounded-2xl border-2 border-thinkers-orange/30">
                     <p className="text-xs font-bold text-thinkers-orange uppercase mb-1">Cierre</p>
-                    <p className="text-sm font-bold text-ink">{challenge.close_feedback}</p>
+                    <p className="text-sm font-medium text-ink">{challenge.close_feedback}</p>
                   </div>
-                )}
-              </div>
-
-              <div className="pt-4 space-y-4">
-                {nextChallenge ? (
-                  <>
-                    <button
-                      onClick={() => handleFinish(true)}
-                      className="w-full bg-thinkers-orange text-white text-xl font-bold py-5 rounded-2xl shadow-[0_6px_0_#C52707] active:shadow-[0_0px_0_#C52707] active:translate-y-1 transition-all focus-visible:ring-2 focus-visible:ring-ink"
-                    >
-                      Siguiente reto
-                    </button>
-                    <button
-                      onClick={() => handleFinish(false)}
-                      className="w-full bg-white text-ink text-lg font-bold py-4 rounded-2xl border-2 border-ink/10"
-                    >
-                      Ir al inicio
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    onClick={() => handleFinish(false)}
-                    className="w-full bg-thinkers-orange text-white text-xl font-bold py-5 rounded-2xl shadow-[0_6px_0_#C52707] active:shadow-[0_0px_0_#C52707] active:translate-y-1 transition-all"
-                  >
-                    Ver mi recorrido
-                  </button>
                 )}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {step === 2 && (
+        <div className="w-full max-w-md pt-4 pb-2">
+          <button onClick={handleNext} className={ctaClass}>Entendido</button>
+        </div>
+      )}
+      {step === 3 && (
+        <div className="w-full max-w-md pt-4 pb-2">
+          <button onClick={handleNext} disabled={!deepenText.trim()} className={ctaClass}>Continuar</button>
+        </div>
+      )}
+      {step === 4 && (
+        <div className="w-full max-w-md pt-4 pb-2">
+          <button onClick={handleNext} disabled={oppBlanks.some(b => !b.trim())} className={ctaClass}>Completar reto</button>
+        </div>
+      )}
+      {step === 5 && (
+        <div className="w-full max-w-md pt-4 pb-2 space-y-3">
+          {nextChallenge ? (
+            <>
+              <button onClick={() => handleFinish(true)} className={ctaClass}>Siguiente reto</button>
+              <button onClick={() => handleFinish(false)} className={ghostClass}>Ir al inicio</button>
+            </>
+          ) : (
+            <button onClick={() => handleFinish(false)} className={ctaClass}>Ver mi recorrido</button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
