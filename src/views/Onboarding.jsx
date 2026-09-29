@@ -87,11 +87,6 @@ export default function Onboarding() {
     }
   };
 
-  const handleBack = () => {
-    if (step > 0) setStep(step - 1);
-    else navigate('/');
-  };
-
   const selectOption = (questionId, optionId) => {
     if (isTransitioning) return;
     setIsTransitioning(true);
@@ -122,17 +117,6 @@ export default function Onboarding() {
   return (
     <div className="min-h-screen bg-soft-surface text-ink flex flex-col items-center p-6 relative overflow-hidden">
       <div className="w-full max-w-md flex items-center gap-4 mt-4 z-20">
-        {step < 4 ? (
-        <button
-          onClick={handleBack}
-          className="text-ink-muted text-2xl font-bold p-2 hover:bg-ink/5 rounded-xl transition-colors focus-visible:ring-2 focus-visible:ring-thinkers-orange"
-          aria-label="Volver"
-        >
-          ←
-        </button>
-        ) : (
-        <div className="w-10" />
-        )}
         <div className="flex-1 h-4 bg-ink/10 rounded-full overflow-hidden" role="progressbar" aria-valuenow={step} aria-valuemin={0} aria-valuemax={totalSteps - 1}>
           <motion.div
             className="h-full bg-thinkers-orange rounded-full"
