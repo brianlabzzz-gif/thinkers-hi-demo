@@ -54,6 +54,28 @@ const BLANK_MSG = {
   empty: 'Este espacio sigue vacío.'
 };
 
+const hearPhrase = (template = '', blanks = []) => {
+  let i = 0;
+  return template.replace(/______/g, () => {
+    const value = (blanks[i] || '').trim();
+    i += 1;
+    return value || '—';
+  });
+};
+
+const syntaxLine = (labels = [], codes = [], hints = []) => {
+  const idx = codes.findIndex((c) => c === 'empty' || c === 'short');
+  if (idx < 0) return null;
+  const label = (labels[idx] || 'ese espacio').toLowerCase();
+  const hint = hints[idx];
+  if (codes[idx] === 'empty') {
+    return hint ? `Falta ${label}. Por ejemplo: “${hint}”.` : `Falta ${label}.`;
+  }
+  return hint
+    ? `“${label}” quedó corto. Prueba “${hint}”.`
+    : `“${label}” quedó corto.`;
+};
+
 export default function Challenge() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -149,7 +171,15 @@ export default function Challenge() {
   const deepenOk = !deepenIssue(deepenText, examples);
   const blankCodes = (challenge.opportunity_blanks || []).map((_, i) => blankIssue(oppBlanks[i], hints[i]));
   const opportunityOk = blankCodes.every((code) => !code);
-  const opportunityLive = blankCodes.find((code) => code && code !== 'empty') || null;
+  const intentionCode = blankCodes.find((c) => c === 'hint' || c === 'generic') || null;
+  const anyBlankDirty = oppBlanks.some((b) => (b || '').trim());
+  const heard = hearPhrase(challenge.opportunity_template, oppBlanks);
+  const syntaxCopy = syntaxLine(challenge.opportunity_blanks || [], blankCodes, hints);
+  const opportunityBanner = intentionCode
+    ? BLANK_MSG[intentionCode]
+    : anyBlankDirty && syntaxCopy
+      ? `Se oye: “${heard}” ${syntaxCopy}`
+      : null;
 
   const tryDeepenNext = () => {
     if (!deepenOk) return;
@@ -326,7 +356,7 @@ export default function Challenge() {
               </div>
               <div className="bg-white p-6 rounded-3xl border-2 border-ink/10 shadow-sm space-y-5">
                 <p className="font-semibold text-ink text-lg leading-relaxed">
-                  {phrase}
+                  {heard}
                 </p>
                 {challenge.opportunity_blanks.map((label, i) => (
                   <label key={i} className="block space-y-1.5 text-left">
@@ -343,9 +373,11 @@ export default function Challenge() {
                       value={oppBlanks[i] || ''}
                       onChange={e => updateBlank(i, e.target.value)}
                     />
-                    {oppBlanks[i]?.trim() && blankCodes[i] && (
+                    {((oppBlanks[i]?.trim() && blankCodes[i]) || (anyBlankDirty && blankCodes[i] === 'empty')) && (
                       <span className="text-xs font-medium text-thinkers-orange">
-                        {BLANK_MSG[blankCodes[i]]}
+                        {blankCodes[i] === 'empty'
+                          ? `Falta ${String(label || '').toLowerCase()} para que la frase cierre.`
+                          : BLANK_MSG[blankCodes[i]]}
                       </span>
                     )}
                   </label>
@@ -399,9 +431,9 @@ export default function Challenge() {
       )}
       {step === 4 && (
         <div className="w-full max-w-md pt-4 pb-2 space-y-3">
-          {opportunityLive && (
+          {opportunityBanner && (
             <p className="text-sm font-medium text-center text-thinkers-orange leading-snug">
-              {BLANK_MSG[opportunityLive]}
+              {opportunityBanner}
             </p>
           )}
           <button onClick={tryOpportunityNext} disabled={!opportunityOk} className={ctaClass}>Completar reto</button>
