@@ -26,6 +26,8 @@ export default function Onboarding() {
     if (/^(test|asd|xxx|user|nombre|admin|hola)$/i.test(raw)) return 'Eso parece un relleno. ¿Cómo te dicen de verdad?';
     return null;
   };
+  const nameIssue = userName.trim().length >= 1 ? nameLooksReal(userName) : null;
+  const nameOk = !nameLooksReal(userName);
 
   const totalSteps = 5;
   const HI_BEATS = ['', 'H', 'HI', 'HI.'];
@@ -90,14 +92,7 @@ export default function Onboarding() {
   };
 
   const handleNext = () => {
-    if (step === 0) {
-      const issue = nameLooksReal(userName);
-      if (issue) {
-        setNameMsg(issue);
-        return;
-      }
-    }
-    setNameMsg('');
+    if (step === 0 && !nameOk) return;
     if (step < totalSteps - 1) {
       setStep(step + 1);
     }
@@ -154,13 +149,14 @@ export default function Onboarding() {
               <input
                 type="text"
                 value={userName}
-                onChange={(e) => {
-                  setNameMsg('');
-                  setUserName(e.target.value);
-                }}
+                onChange={(e) => setUserName(e.target.value)}
+                className={`w-full text-2xl font-bold text-center bg-white border-2 rounded-2xl p-6 focus:outline-none focus:ring-4 shadow-sm transition-all ${
+                  nameIssue
+                    ? 'border-thinkers-orange focus:border-thinkers-orange focus:ring-thinkers-orange/20'
+                    : 'border-ink/10 focus:border-thinkers-orange focus:ring-thinkers-orange/20'
+                }`}
                 placeholder="Escribe tu nombre..."
                 aria-label="Tu nombre"
-                className="w-full text-2xl font-bold text-center bg-white border-2 border-ink/10 rounded-2xl p-6 focus:outline-none focus:border-thinkers-orange focus:ring-4 focus:ring-thinkers-orange/20 shadow-sm transition-all"
                 autoFocus
                 onKeyDown={(e) => e.key === 'Enter' && handleNext()}
               />
@@ -233,12 +229,12 @@ export default function Onboarding() {
         <div className="w-full max-w-md pt-4 pb-2">
           {step === 0 && (
             <>
-              {nameMsg && (
-                <p className="text-sm font-medium text-center text-thinkers-orange leading-snug mb-3">{nameMsg}</p>
+              {nameIssue && (
+                <p className="text-sm font-medium text-center text-thinkers-orange leading-snug mb-3">{nameIssue}</p>
               )}
               <button
                 onClick={handleNext}
-                disabled={!userName.trim()}
+                disabled={!nameOk}
                 className="w-full bg-thinkers-orange text-white text-lg font-bold py-3.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] active:translate-y-0.5 transition-all disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-ink"
               >
                 Continuar

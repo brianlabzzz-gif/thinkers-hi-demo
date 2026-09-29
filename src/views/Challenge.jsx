@@ -47,6 +47,13 @@ const blankIssue = (text, hint) => {
   return null;
 };
 
+const BLANK_MSG = {
+  hint: 'Ahí pegaste el ejemplo. Pon algo que veas tú.',
+  generic: '“Cosa” o “algo” no dicen nada. Nombra el objeto.',
+  short: 'Muy corto. Dos palabras mínimo, como “el enchufe viejo”.',
+  empty: 'Este espacio sigue vacío.'
+};
+
 export default function Challenge() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -129,43 +136,28 @@ export default function Challenge() {
   if (!challenge) return null;
 
   const updateBlank = (index, value) => {
-    setFormMsg('');
     setOppBlanks(prev => prev.map((b, i) => i === index ? value : b));
   };
 
   const handleNext = () => {
-    setFormMsg('');
     if (step < 5) setStep(step + 1);
   };
 
+  const examples = challenge.help_examples || [];
+  const hints = challenge.opportunity_hints || [];
+  const deepenLive = deepenText.trim().length >= 3 ? deepenIssue(deepenText, examples) : null;
+  const deepenOk = !deepenIssue(deepenText, examples);
+  const blankCodes = (challenge.opportunity_blanks || []).map((_, i) => blankIssue(oppBlanks[i], hints[i]));
+  const opportunityOk = blankCodes.every((code) => !code);
+  const opportunityLive = blankCodes.find((code) => code && code !== 'empty') || null;
+
   const tryDeepenNext = () => {
-    const issue = deepenIssue(deepenText, challenge.help_examples || []);
-    if (issue) {
-      setFormMsg(issue);
-      return;
-    }
+    if (!deepenOk) return;
     handleNext();
   };
 
   const tryOpportunityNext = () => {
-    const hints = challenge.opportunity_hints || [];
-    const issues = (challenge.opportunity_blanks || []).map((_, i) => blankIssue(oppBlanks[i], hints[i]));
-    if (issues.includes('hint')) {
-      setFormMsg('Ahí pegaste el ejemplo. Pon algo que veas tú.');
-      return;
-    }
-    if (issues.includes('generic')) {
-      setFormMsg('“Cosa” o “algo” no dicen nada. Nombra el objeto.');
-      return;
-    }
-    if (issues.includes('short') || issues.includes('empty')) {
-      setFormMsg('Muy corto. Dos palabras mínimo, como “el enchufe viejo”.');
-      return;
-    }
-    if (issues.some(Boolean)) {
-      setFormMsg('Completa cada espacio con palabras tuyas.');
-      return;
-    }
+    if (!opportunityOk) return;
     handleNext();
   };
 
@@ -294,15 +286,19 @@ export default function Challenge() {
               </h1>
               <textarea
                 value={deepenText}
-                onChange={(e) => {
-                  setFormMsg('');
-                  setDeepenText(e.target.value);
-                }}
-                className="w-full text-lg font-medium bg-white border-2 border-ink/10 rounded-2xl p-6 focus:outline-none focus:border-thinkers-orange focus:ring-4 focus:ring-thinkers-orange/20 shadow-sm transition-all min-h-[150px]"
+                onChange={(e) => setDeepenText(e.target.value)}
+                className={`w-full text-lg font-medium bg-white border-2 rounded-2xl p-6 focus:outline-none focus:ring-4 shadow-sm transition-all min-h-[150px] ${
+                  deepenLive
+                    ? 'border-thinkers-orange focus:border-thinkers-orange focus:ring-thinkers-orange/20'
+                    : 'border-ink/10 focus:border-thinkers-orange focus:ring-thinkers-orange/20'
+                }`}
                 placeholder="Escribe tu idea en 2 o 3 frases."
                 aria-label="Tu idea"
                 autoFocus
               />
+              {deepenLive && (
+                <p className="text-sm font-medium text-thinkers-orange leading-snug">{deepenLive}</p>
+              )}
               {(stuck || (challenge.help_examples && challenge.help_examples.length)) && (
                 <div className="space-y-2">
                   {stuck && (
@@ -339,10 +335,19 @@ export default function Challenge() {
                       type="text"
                       placeholder={challenge.opportunity_hints?.[i] || label}
                       aria-label={label}
-                      className="w-full text-lg font-medium bg-warm-canvas border-2 border-ink/10 rounded-xl p-4 focus:border-thinkers-orange outline-none focus:ring-4 focus:ring-thinkers-orange/20 transition-all"
+                      className={`w-full text-lg font-medium bg-warm-canvas border-2 rounded-xl p-4 outline-none focus:ring-4 transition-all ${
+                        oppBlanks[i]?.trim() && blankCodes[i]
+                          ? 'border-thinkers-orange focus:border-thinkers-orange focus:ring-thinkers-orange/20'
+                          : 'border-ink/10 focus:border-thinkers-orange focus:ring-thinkers-orange/20'
+                      }`}
                       value={oppBlanks[i] || ''}
                       onChange={e => updateBlank(i, e.target.value)}
                     />
+                    {oppBlanks[i]?.trim() && blankCodes[i] && (
+                      <span className="text-xs font-medium text-thinkers-orange">
+                        {BLANK_MSG[blankCodes[i]]}
+                      </span>
+                    )}
                   </label>
                 ))}
               </div>
@@ -388,19 +393,18 @@ export default function Challenge() {
         </div>
       )}
       {step === 3 && (
-        <div className="w-full max-w-md pt-4 pb-2 space-y-3">
-          {formMsg && (
-            <p className="text-sm font-medium text-center text-thinkers-orange leading-snug">{formMsg}</p>
-          )}
-          <button onClick={tryDeepenNext} disabled={!deepenText.trim()} className={ctaClass}>Continuar</button>
+        <div className="w-full max-w-md pt-4 pb-2">
+          <button onClick={tryDeepenNext} disabled={!deepenOk} className={ctaClass}>Continuar</button>
         </div>
       )}
       {step === 4 && (
         <div className="w-full max-w-md pt-4 pb-2 space-y-3">
-          {formMsg && (
-            <p className="text-sm font-medium text-center text-thinkers-orange leading-snug">{formMsg}</p>
+          {opportunityLive && (
+            <p className="text-sm font-medium text-center text-thinkers-orange leading-snug">
+              {BLANK_MSG[opportunityLive]}
+            </p>
           )}
-          <button onClick={tryOpportunityNext} disabled={oppBlanks.some(b => !b.trim())} className={ctaClass}>Completar reto</button>
+          <button onClick={tryOpportunityNext} disabled={!opportunityOk} className={ctaClass}>Completar reto</button>
         </div>
       )}
       {step === 5 && (
