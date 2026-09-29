@@ -127,7 +127,7 @@ export default function Onboarding() {
         </div>
       </div>
 
-      <div className="w-full max-w-md z-10 flex-1 flex flex-col justify-center mt-8">
+      <div className="w-full max-w-md z-10 flex-1 flex flex-col justify-start pt-10">
         <AnimatePresence mode="wait">
           {step === 0 && (
             <motion.div key="name-step" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8">

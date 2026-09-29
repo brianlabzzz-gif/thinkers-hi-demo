@@ -159,18 +159,15 @@ export default function Challenge() {
         </div>
       </header>
 
-      <div className="w-full max-w-md p-6 flex-1 flex flex-col justify-center">
+      <div className="w-full max-w-md p-6 flex-1 flex flex-col justify-start pt-4">
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div key="step1" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8">
-              <div className="flex items-start gap-4">
-                <span className="text-4xl mt-1" aria-hidden="true">🧠</span>
-                <div>
-                  <h1 className="text-2xl font-bold text-ink mb-2">{challenge.title}</h1>
-                  <p className="text-lg font-medium text-ink-muted bg-white p-4 rounded-2xl border-2 border-ink/10 shadow-sm leading-relaxed">
-                    {challenge.scenario}
-                  </p>
-                </div>
+              <div>
+                <h1 className="text-2xl font-bold text-ink mb-3">{challenge.title}</h1>
+                <p className="text-lg font-medium text-ink-muted bg-white p-4 rounded-2xl border-2 border-ink/10 shadow-sm leading-relaxed">
+                  {challenge.scenario}
+                </p>
               </div>
 
               <div className="space-y-4 pt-4">
@@ -196,9 +193,6 @@ export default function Challenge() {
 
           {step === 2 && (
             <motion.div key="step2" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8 flex flex-col items-center text-center">
-              <div className="w-24 h-24 rounded-full flex items-center justify-center shadow-lg mb-2 bg-thinkers-orange/10">
-                <span className="text-5xl" aria-hidden="true">💡</span>
-              </div>
               <h1 className="text-2xl font-bold text-ink">{feedbackData.title}</h1>
               <p className="text-lg font-medium text-ink-muted bg-white p-6 rounded-3xl border-2 border-ink/10 shadow-sm leading-relaxed">
                 {feedbackData.text}
@@ -214,12 +208,9 @@ export default function Challenge() {
 
           {step === 3 && (
             <motion.div key="step3" variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-8">
-              <div className="flex items-start gap-4">
-                <span className="text-4xl mt-1" aria-hidden="true">🤔</span>
-                <h1 className="text-xl font-bold text-ink leading-relaxed">
-                  {challenge.deepen_prompt}
-                </h1>
-              </div>
+              <h1 className="text-xl font-bold text-ink leading-relaxed">
+                {challenge.deepen_prompt}
+              </h1>
               <div className="pt-4">
                 <textarea
                   value={deepenText}
